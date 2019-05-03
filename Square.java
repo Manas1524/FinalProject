@@ -1,6 +1,8 @@
-package Board;
+package pieces;
 import java.util.*;
-import Pieces.Piece;
+
+import board.Unoccupied_Square;
+import pieces.Piece;
 
 public abstract class Square {
 	
@@ -8,7 +10,7 @@ public abstract class Square {
 	
 	private static final Map<Integer, Unoccupied_Square> EMPTY_SQUARES_CACHE = createAllEmptySquares();
 	
-	Square(int coordinate){
+	public Square(int coordinate){
 		squareCoordinate = coordinate;
 	}
 	

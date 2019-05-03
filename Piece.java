@@ -1,8 +1,11 @@
-package Pieces;
+package pieces;
 
 import java.util.ArrayList;
 
-import Board.Move;
+//import Board.Move;
+import UI.Gameboard;
+import board.Board;
+import board.Move;
 
 public abstract class Piece {
 	private int position;
@@ -12,5 +15,8 @@ public abstract class Piece {
 		this.pieceTeam = color;
 	}
 	
+	public Team getTeam() {
+		return this.pieceTeam;
+	}
 	public abstract ArrayList<Move> legalMoves(Board board);
 }
