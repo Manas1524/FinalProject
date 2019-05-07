@@ -1,6 +1,6 @@
-package Board;
+package pieces;
 
-import Pieces.Piece;
+import pieces.Piece;
 
 public class Unoccupied_Square extends Square{
 	Unoccupied_Square(int coordinate){
