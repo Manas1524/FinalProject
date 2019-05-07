@@ -1,12 +1,13 @@
-package chessFinalProject;
+package UI;
 
 import java.awt.Graphics;
 
-import UI.Gameboard;
-
 public class ChessDriver {
 	public static void main(String[] args) {
-		Gameboard g = new Gameboard();
-		g.paint(null);
+	
+		//Board board = Board.createStandardBoard();
+		//System.out.println(board);
+		
+		Frame frame = new Frame();
 	}
 }
