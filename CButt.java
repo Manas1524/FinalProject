@@ -1,7 +1,14 @@
 package UI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import pieces.*;
+
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 public class CButt extends JPanel
@@ -15,22 +22,100 @@ public class CButt extends JPanel
 		super(new GridBagLayout());
 		this.tile = tile;
 		setPreferredSize(new Dimension(100,100));
+		addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(rightButt(event))
+				{
+					if(Frame.click == null) //first click	
+					{
+						Frame.click = Frame.cboard.getTile(tile);
+						Frame.piece = Frame.click.getPiece();
+						if(Frame.piece == null)
+						{
+							Frame.click = null;
+						}
+					}
+					else //second click	
+					{
+						Frame.destination = Frame.cboard.getTile(tile);
+						Move move = null;
+						MoveTransition transition = Frame.cboard.currentPlayer().makeMove(move);
+						if(transition.getMoveStatus().isDone())
+							{
+								Frame.cboard.currentPlayer().makeMove(move);
+							}
+					}
+				}
+				else if(leftButt(event))
+				{
+					
+				}
+				
+			}
+		});
+		
 		Color();
+		assignIcon(Frame.cboard);
 		validate();
+	}
+	
+	private void Icon(Board board)
+	{
+		this.removeAll();
+		if(board.getSquare(tile).isOccupied())
+		{
+			
+			try 
+			{
+			BufferedImage piece = ImageIO.read(Frame.piecePath + board.getSquare(tile).getPiece()
+					.getTeam().toString().substring(0, 1) + board.getTile(tile).getPiece().toSting() + ".png"));
+			add(new JLabel(new ImageIcon(piece)));
+			}
+			catch(Exception e)
+			{
+				System.out.println("error");
+			}
+		}
 	}
 	
 	public void Color()
 	{
-		if(BoardUtils.FIRST_ROW(tile)) || BoardUtils.THIRD_ROW(tile) ||
-		BoardUtils.FIFTH_ROW(tile) || BoardUtils.SEVENTH_ROW(tile))
+		if(BoardFunctionality.rank1(tile) || BoardFunctionality.rank3(tile) ||
+		BoardFunctionality.rank5(tile) || BoardFunctionality.rank7(tile))
 		{
-			setBackground(lbrown);
+			setBackground(tile % 2 == 0 ? lbrown : dbrown);
 		}
 		
-		if(BoardUtils.SECOND_ROW(tile)) || BoardUtils.FOURTH_ROW(tile) ||
-		BoardUtils.SIXTH_ROW(tile) || BoardUtils.EIGHTH_ROW(tile))
+		if(BoardFunctionality.rank2(tile) || BoardFunctionality.rank4(tile) ||
+		BoardFunctionality.rank6(tile) || BoardFunctionality.rank8(tile))
 		{
-			setBackground(dbrown);
+			setBackground(tile % 2 !== 0 ? lbrown : dbrown);
 		}
 		
 	}

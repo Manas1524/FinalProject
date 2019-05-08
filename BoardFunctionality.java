@@ -8,15 +8,19 @@ public class BoardFunctionality {
 	
 	//This class cannot be instantiated, so all the variables must be public in order for us to use them in other classes
 	
-	//Knight, Rook, Bishop, Queen Edge Cases
 	public static boolean[] file1 = fillFileArrays(0);
 	public static boolean[] file2 = fillFileArrays(1);
 	public static boolean[] file7 = fillFileArrays(6);
 	public static boolean[] file8 = fillFileArrays(7);
 	
-	//King Edge Cases
-	public static boolean[] rank2 = null;
-	public static boolean[] rank7 = null;
+	public static boolean[] rank1 = fillRankArrays(0);
+	public static boolean[] rank2 = fillRankArrays(8);
+	public static boolean[] rank3 = fillRankArrays(16);
+	public static boolean[] rank4 = fillRankArrays(24);
+	public static boolean[] rank5 = fillRankArrays(32);
+	public static boolean[] rank6 = fillRankArrays(40);
+	public static boolean[] rank7 = fillRankArrays(48);
+	public static boolean[] rank8 = fillRankArrays(56);
 	
 	public static int squareAmount = 64;
 	public static int squaresPerRow = 8;

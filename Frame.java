@@ -1,14 +1,21 @@
 package UI;
 
 import java.awt.BorderLayout;
+import Board.*;
+import pieces.*;
 
 import javax.swing.*;
 
 public class Frame
 {
-	JMenuBar menu = new JMenuBar();
+	private Board cboard = Board.createBoard();
+	private JMenuBar menu = new JMenuBar();
 	private JFrame frame = new JFrame("CHESS");
 	private Panel panel = new Panel();
+	private String piecePath = "chess java/";
+	private Square click;
+	private Square destination;
+	private Piece piece;
 	
 	public Frame() {
 		
@@ -17,7 +24,7 @@ public class Frame
 	frame.setVisible(true);
 	
 	JMenu file = new JMenu("File");
-menu.add(file);
+	menu.add(file);
 	
 	frame.setLayout(new BorderLayout());
 	frame.add(panel, BorderLayout.CENTER);
@@ -25,4 +32,6 @@ menu.add(file);
 	
 	
 	}
+	
+	
 }
