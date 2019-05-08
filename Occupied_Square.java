@@ -1,10 +1,10 @@
-package Board;
+package pieces;
 
-import Pieces.Piece;
+import pieces.*;
 
 public class Occupied_Square extends Square{
 	private Piece pieceOnSquare;
-	Occupied_Square(int coordinate, Piece squarePiece){
+	public Occupied_Square(int coordinate, Piece squarePiece){
 		super(coordinate);
 		pieceOnSquare = squarePiece;
 		
@@ -12,14 +12,17 @@ public class Occupied_Square extends Square{
 
 	@Override
 	public boolean isOccupied() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public Piece getPiece() {
-		// TODO Auto-generated method stub
-		return pieceOnSquare;
+		return this.pieceOnSquare;
+	}
+	
+	@Override
+	public String toString() {
+		return getPiece().getPieceTeam().isBlack() ? getPiece().toString().toLowerCase() : getPiece().toString();
 	}
 	
 }

@@ -10,14 +10,14 @@ public class King extends Piece{
 	private int position;
 	private Team pieceTeam;
 	
-	public King(int position, Team pieceTeam) {
+	public King(Team pieceTeam, int position) {
 		super(position, pieceTeam);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
 	
 	public ArrayList<Move> legalMoves(Board board){
-		ArrayList<Move> legaLMoves = new ArrayList<Move>();
+		ArrayList<Move> legalMoves = new ArrayList<Move>();
 		
 		//for(int possibleMove: potentialMoves) {
 		for(int i = 0; i < potentialMoves.length; i++) {
@@ -28,12 +28,30 @@ public class King extends Piece{
 				continue;
 			}
 			//If the coordinate is valid (in the chess board)
-			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate) && ()) {
+			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) {
 				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
-				
-				
+					//If the square is not occupied by ANY piece, no matter the team, it is legal
+					if(!potentialMoveSquare.isOccupied()) {
+						//Add the piece to the legalMoves list
+						legalMoves.add(new MajorMove(board, this, potentialMoveSquare));
+					}
+					else{
+						Piece pieceAtDestination = potentialMoveSquare.getPiece();
+						Team pieceTeam = pieceAtDestination.getTeam();
+						
+						//If there is no piece there/The piece there is of the opposite team
+						if(this.pieceTeam != pieceTeam) {
+							//It is a legal move, so add it to the arrayList
+							legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare, pieceAtDestination));
+						}
+					}
 			}
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.KING.toString();
 	}
 	
 	public static boolean file1EdgeCase(int currentSquare, int possibleMove) {

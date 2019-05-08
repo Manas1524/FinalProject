@@ -8,22 +8,17 @@ public class BoardFunctionality {
 	
 	//This class cannot be instantiated, so all the variables must be public in order for us to use them in other classes
 	
-	public static boolean[] file1 = fillFileArrays(0);
-	public static boolean[] file2 = fillFileArrays(1);
-	public static boolean[] file7 = fillFileArrays(6);
-	public static boolean[] file8 = fillFileArrays(7);
+	public static boolean[] file1 = createFile(0);
+	public static boolean[] file2 = createFile(1);
+	public static boolean[] file7 = createFile(6);
+	public static boolean[] file8 = createFile(7);
 	
-	public static boolean[] rank1 = fillRankArrays(0);
-	public static boolean[] rank2 = fillRankArrays(8);
-	public static boolean[] rank3 = fillRankArrays(16);
-	public static boolean[] rank4 = fillRankArrays(24);
-	public static boolean[] rank5 = fillRankArrays(32);
-	public static boolean[] rank6 = fillRankArrays(40);
-	public static boolean[] rank7 = fillRankArrays(48);
-	public static boolean[] rank8 = fillRankArrays(56);
+	//Number is the square that begins the row
+	public static boolean[] rank2 = createRank(8);
+	public static boolean[] rank7 = createRank(48);
 	
-	public static int squareAmount = 64;
-	public static int squaresPerRow = 8;
+	public static final int SQUARE_AMOUNT = 64;
+	public static final int SQUARES_PER_ROW = 8;
 	
 	/**
 	 * 
@@ -46,14 +41,25 @@ public class BoardFunctionality {
 		return false;
 	}
 	
-	public static boolean[] fillFileArrays(int columnNumber) {
-		boolean[] file = new boolean[squareAmount];
+	public static boolean[] createFile(int columnNumber) {
+		boolean[] file = new boolean[SQUARES_PER_ROW];
 		
 		do {
 			file[columnNumber] = true;
-			columnNumber += squaresPerRow;
+			columnNumber += SQUARES_PER_ROW;
 		}
-		while(columnNumber < squaresPerRow);
+		while(columnNumber < SQUARES_PER_ROW);
 			return file;
+	}
+	
+	public static boolean[] createRank(int rowNumber) {
+		boolean[] rank = new boolean[SQUARES_PER_ROW];
+		
+		do {
+			rank[rowNumber] = true;
+			rowNumber ++;
+		}
+		while(rowNumber % SQUARES_PER_ROW != 0);
+			return rank;
 	}
 }

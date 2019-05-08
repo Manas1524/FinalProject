@@ -15,7 +15,7 @@ public class Knight extends Piece{
 	private int position;
 	private Team pieceTeam;
 	
-	public Knight(int position, Team pieceTeam) {
+	public Knight(Team pieceTeam, int position) {
 		super(position, pieceTeam);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
@@ -46,8 +46,7 @@ public class Knight extends Piece{
 				//If the square is not occupied by ANY piece, no matter the team, it is legal
 				if(!potentialMoveSquare.isOccupied()) {
 					//Add the piece to the legalMoves list
-					Move allowedMove = new Move();
-					legalMoves.add(new Move());
+					legalMoves.add(new Move.MajorMove(board, this, potentialMoveSquare));
 				}
 				else{
 					Piece pieceAtDestination = potentialMoveSquare.getPiece();
@@ -56,13 +55,17 @@ public class Knight extends Piece{
 					//If there is no piece there/The piece there is of the opposite team
 					if(this.pieceTeam != pieceTeam) {
 						//It is a legal move, so add it to the arrayList
-						Move allowedMove = new Move();
-						legalMoves.add(allowedMove);
+						legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare));
 					}
 				}
 			}
 		}
 		return legalMoves;
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.KNIGHT.toString();
 	}
 	
 	public static boolean file1EdgeCase(int currentSquare, int possibleMove) {

@@ -1,5 +1,6 @@
 package pieces;
 
 public enum Team {
-	BLACK, WHITE
+	BLACK,
+	WHITE;
 }

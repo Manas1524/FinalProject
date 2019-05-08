@@ -2,15 +2,17 @@ package pieces;
 
 import java.util.ArrayList;
 
-import Board.Move;
-import Board.Square;
+import board.*;
 
-public class Bishop {
+public class Bishop extends Piece{
 	private int[] potentialMoves = {-9,-7,7,9};
 	private int position;
-	public Bishop(int position, Team pieceColor) {
-		super(position, pieceColor);
+	private Team pieceTeam;
+	
+	public Bishop(Team pieceTeam, int position) {
+		super(position, pieceTeam);
 		this.position = position;
+		this.pieceTeam = pieceTeam;
 	}
 	
 	/**
@@ -28,7 +30,7 @@ public class Bishop {
 		{
 			potentialMoveCoordinates = this.position;
 			
-			while(isValidCoordinate(potentialMoveCoordinates))
+			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates))
 			{
 				if(isFirstColumnExclusion(potentialMoveCoordinates, possibleMove)
 						|| (isEightColumnExclusion(potentialMoveCoordinates, possibleMove)))
@@ -39,21 +41,22 @@ public class Bishop {
 			potentialMoveCoordinates += possibleMove;
 			
 			//If the coordinate is valid (in the chess board)
-			if(isValidCoordinate(potentialMoveCoordinates)) 
+			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates)) 
 			{
 				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinates);
 				
-				if(!potentialMoveTile.isTileOccupied()) 
+				if(!potentialMoveSquare.isOccupied()) 
 				{
-					legalMoves.add(new Move.MajorMove(board, this, potentialMoveCoordinate));
+					legalMoves.add(new Move.MajorMove(board, this, potentialMoveSquare));
 				}
 				else
 				{
-					Piece pieceAtDestination = potentialMoveTile.getPiece();
+					Piece pieceAtDestination = potentialMoveSquare.getPiece();
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
-					if(this.Team != Team)
+					
+					if(this.pieceTeam != pieceTeam)
 					{
-						legalMoves.add(new Move.AttackMove(board, this, potentialMoveCoordinate, pieceAtDestination))
+						legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare, pieceAtDestination))
 					}
 					break;
 				}
@@ -61,7 +64,12 @@ public class Bishop {
 			}
 			
 		}
-		return ImmutableList.copyOf(legalMoves);
+		return legalMoves;
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.BISHOP.toString();
 	}
 	
 	/**
@@ -72,7 +80,7 @@ public class Bishop {
 	 */
 	public static boolean isFirstColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		return Move.FIRST_COLUMN(currentPosition) && (potentialMoveCoordinate == -9 || potentialMoveCoordinate == 7);
+		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == -9 || potentialMoveCoordinate == 7);
 	}
 	
 	/**
@@ -83,7 +91,6 @@ public class Bishop {
 	 */
 	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		return Move.EIGHT_COLUMN(currentPosition) && (potentialMoveCoordinate == 9 || potentialMoveCoordinate == -7);
+		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 9 || potentialMoveCoordinate == -7);
 	}
-
 }

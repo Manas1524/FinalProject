@@ -1,6 +1,6 @@
 package pieces;
 
-import pieces.Piece;
+import pieces.*;
 
 public class Unoccupied_Square extends Square{
 	Unoccupied_Square(int coordinate){
@@ -9,14 +9,16 @@ public class Unoccupied_Square extends Square{
 
 	@Override
 	public boolean isOccupied() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Piece getPiece() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
+	@Override
+	public String toString() {
+		return "-";
+	}
 }

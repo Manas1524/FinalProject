@@ -1,17 +1,19 @@
 package pieces;
 import java.util.ArrayList;
 
-import Board.*;
+import board.*;
 import pieces.*;
-
 
 public class Rook extends Piece {
 	
 	private int[] potentialMoves = {-8,-1,1,8};
 	private int position;
-	public Rook(int position, Team pieceColor) {
-		super(position, pieceColor);
+	private Team pieceTeam;
+	
+	public Rook(Team pieceTeam, int position) {
+		super(position, pieceTeam);
 		this.position = position;
+		this.pieceTeam = pieceTeam;
 	}
 	
 	/**
@@ -29,7 +31,7 @@ public class Rook extends Piece {
 		{
 			potentialMoveCoordinates = this.position;
 			
-			while(isValidCoordinate(potentialMoveCoordinates))
+			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates))
 			{
 				if(isFirstColumnExclusion(potentialMoveCoordinates, possibleMove)
 						|| (isEightColumnExclusion(potentialMoveCoordinates, possibleMove)))
@@ -40,21 +42,21 @@ public class Rook extends Piece {
 			potentialMoveCoordinates += possibleMove;
 			
 			//If the coordinate is valid (in the chess board)
-			if(isValidCoordinate(potentialMoveCoordinates)) 
+			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates)) 
 			{
 				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinates);
 				
-				if(!potentialMoveTile.isTileOccupied()) 
+				if(!potentialMoveSquare.isTileOccupied()) 
 				{
-					legalMoves.add(new Move.MajorMove(board, this, potentialMoveCoordinate));
+					legalMoves.add(new Move.MajorMove(board, this, potentialMoveSquare));
 				}
 				else
 				{
-					Piece pieceAtDestination = potentialMoveTile.getPiece();
+					Piece pieceAtDestination = potentialMoveSquare.getPiece();
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
-					if(this.Team != Team)
+					if(this.pieceTeam != pieceTeam)
 					{
-						legalMoves.add(new Move.AttackMove(board, this, potentialMoveCoordinate, pieceAtDestination))
+						legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare, pieceAtDestination));
 					}
 					break;
 				}
@@ -63,6 +65,11 @@ public class Rook extends Piece {
 			
 		}
 		return ImmutableList.copyOf(legalMoves);
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.ROOK.toString();
 	}
 	
 	/**

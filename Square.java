@@ -1,8 +1,7 @@
 package pieces;
 import java.util.*;
 
-import board.Unoccupied_Square;
-import pieces.Piece;
+import pieces.Unoccupied_Square;
 
 public abstract class Square {
 	
@@ -14,8 +13,6 @@ public abstract class Square {
 		squareCoordinate = coordinate;
 	}
 	
-
-
 	private static Map<Integer, Unoccupied_Square> createAllEmptySquares() {
 		// TODO Auto-generated method stub
 		Map<Integer, Unoccupied_Square> unoccupiedSquares = new HashMap<>();
@@ -24,9 +21,12 @@ public abstract class Square {
 		}
 		return unoccupiedSquares;
 	}
-
-
-
+	
 	public abstract boolean isOccupied();
 	public abstract Piece getPiece();
+
+	public static Square createSquare(int i, Piece piece) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
