@@ -2,17 +2,15 @@ package pieces;
 
 import java.util.ArrayList;
 
-import board.*;
+import Board.Move;
+import Board.Square;
 
-public class Bishop extends Piece{
+public class Bishop {
 	private int[] potentialMoves = {-9,-7,7,9};
 	private int position;
-	private Team pieceTeam;
-	
-	public Bishop(Team pieceTeam, int position) {
-		super(position, pieceTeam);
+	public Bishop(int position, Team pieceColor) {
+		super(position, pieceColor);
 		this.position = position;
-		this.pieceTeam = pieceTeam;
 	}
 	
 	/**
@@ -30,7 +28,7 @@ public class Bishop extends Piece{
 		{
 			potentialMoveCoordinates = this.position;
 			
-			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates))
+			while(isValidCoordinate(potentialMoveCoordinates))
 			{
 				if(isFirstColumnExclusion(potentialMoveCoordinates, possibleMove)
 						|| (isEightColumnExclusion(potentialMoveCoordinates, possibleMove)))
@@ -41,22 +39,21 @@ public class Bishop extends Piece{
 			potentialMoveCoordinates += possibleMove;
 			
 			//If the coordinate is valid (in the chess board)
-			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates)) 
+			if(isValidCoordinate(potentialMoveCoordinates)) 
 			{
 				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinates);
 				
-				if(!potentialMoveSquare.isOccupied()) 
+				if(!potentialMoveTile.isTileOccupied()) 
 				{
-					legalMoves.add(new Move.MajorMove(board, this, potentialMoveSquare));
+					legalMoves.add(new Move.MajorMove(board, this, potentialMoveCoordinate));
 				}
 				else
 				{
-					Piece pieceAtDestination = potentialMoveSquare.getPiece();
+					Piece pieceAtDestination = potentialMoveTile.getPiece();
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
-					
-					if(this.pieceTeam != pieceTeam)
+					if(this.Team != Team)
 					{
-						legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare, pieceAtDestination))
+						legalMoves.add(new Move.AttackMove(board, this, potentialMoveCoordinate, pieceAtDestination))
 					}
 					break;
 				}
@@ -64,12 +61,7 @@ public class Bishop extends Piece{
 			}
 			
 		}
-		return legalMoves;
-	}
-	
-	@Override
-	public String toString() {
-		return Piece.PieceType.BISHOP.toString();
+		return ImmutableList.copyOf(legalMoves);
 	}
 	
 	/**
@@ -80,7 +72,7 @@ public class Bishop extends Piece{
 	 */
 	public static boolean isFirstColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == -9 || potentialMoveCoordinate == 7);
+		return Move.FIRST_COLUMN(currentPosition) && (potentialMoveCoordinate == -9 || potentialMoveCoordinate == 7);
 	}
 	
 	/**
@@ -91,6 +83,7 @@ public class Bishop extends Piece{
 	 */
 	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 9 || potentialMoveCoordinate == -7);
+		return Move.EIGHT_COLUMN(currentPosition) && (potentialMoveCoordinate == 9 || potentialMoveCoordinate == -7);
 	}
+
 }

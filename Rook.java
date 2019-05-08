@@ -1,8 +1,9 @@
 package pieces;
 import java.util.ArrayList;
 
-import board.*;
+import Board.*;
 import pieces.*;
+
 
 public class Rook extends Piece {
 	
@@ -10,7 +11,7 @@ public class Rook extends Piece {
 	private int position;
 	private Team pieceTeam;
 	
-	public Rook(Team pieceTeam, int position) {
+	public Rook(int position, Team pieceTeam) {
 		super(position, pieceTeam);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
@@ -33,8 +34,8 @@ public class Rook extends Piece {
 			
 			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates))
 			{
-				if(isFirstColumnExclusion(potentialMoveCoordinates, possibleMove)
-						|| (isEightColumnExclusion(potentialMoveCoordinates, possibleMove)))
+				if(file1EdgeCase(potentialMoveCoordinates, possibleMove)
+						|| (file8EdgeCase(potentialMoveCoordinates, possibleMove)))
 				{
 					break;
 				}
@@ -46,9 +47,9 @@ public class Rook extends Piece {
 			{
 				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinates);
 				
-				if(!potentialMoveSquare.isTileOccupied()) 
+				if(!potentialMoveSquare.isOccupied()) 
 				{
-					legalMoves.add(new Move.MajorMove(board, this, potentialMoveSquare));
+					legalMoves.add(new Move.ImportantMove(board, this, potentialMoveCoordinate));
 				}
 				else
 				{
@@ -56,7 +57,7 @@ public class Rook extends Piece {
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
 					if(this.pieceTeam != pieceTeam)
 					{
-						legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare, pieceAtDestination));
+						legalMoves.add(new Move.AttackingMove(board, this, potentialMoveCoordinate, pieceAtDestination))
 					}
 					break;
 				}
@@ -64,12 +65,7 @@ public class Rook extends Piece {
 			}
 			
 		}
-		return ImmutableList.copyOf(legalMoves);
-	}
-	
-	@Override
-	public String toString() {
-		return Piece.PieceType.ROOK.toString();
+		
 	}
 	
 	/**
@@ -78,9 +74,10 @@ public class Rook extends Piece {
 	 * @param potentialMoveCoordinate
 	 * @return
 	 */
-	public static boolean isFirstColumnExclusion(int currentPosition, int potentialMoveCoordinate)
+	public static boolean file1EdgeCase(int currentSquare, int possibleMove)
 	{
-		return Move.FIRST_COLUMN(currentPosition) && (potentialMoveCoordinate == -1);
+		boolean isEdgeCase = (BoardFunctionality.file1(currentSquare) && (possibleMove == -1));
+		return isEdgeCase;
 	}
 	
 	/**
@@ -89,9 +86,10 @@ public class Rook extends Piece {
 	 * @param potentialMoveCoordinate
 	 * @return
 	 */
-	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
+	public static boolean file8EdgeCase(int currentSquare, int possibleMove)
 	{
-		return Move.EIGHT_COLUMN(currentPosition) && (potentialMoveCoordinate == 1);
+		boolean isEdgeCase = (BoardFunctionality.file8(currentSquare) && (possibleMove == 1));
+		return isEdgeCase;
 	}
 
 }
