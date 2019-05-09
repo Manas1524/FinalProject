@@ -1,7 +1,7 @@
 package board;
 
 import java.util.*;
-
+import player.*;
 import pieces.*;
 
 public class Board {
@@ -11,6 +11,9 @@ public class Board {
 	private ArrayList<Piece> whitePieces;
 	private ArrayList<Piece> blackPieces;
 	
+	private WhitePlayer whitePlayer;
+	private BlackPlayer blackPlayer;
+	
 	public Board(Builder builder) {
 		this.gameBoard = makeBoard(builder);
 		this.whitePieces = findAlivePieces(this.gameBoard, Team.WHITE);
@@ -18,7 +21,11 @@ public class Board {
 		
 		ArrayList<Move> standardWhiteMoves = findLegalMoves(this.whitePieces);
 		ArrayList<Move> standardBlackMoves = findLegalMoves(this.blackPieces);
+		
+		this.whitePlayer =  new WhitePlayer(this, standardWhiteMoves, standardBlackMoves);
+		this.blackPlayer =  new BlackPlayer(this, standardWhiteMoves, standardBlackMoves);
 	}
+	
 	
 	/**
 	 * This methods give each square an id in ASCII text
@@ -37,6 +44,22 @@ public class Board {
 		return output.toString();
 	}
 
+	public Player whitePlayer() {
+		return this.whitePlayer;
+	}
+	
+	public Player blackPlayer() {
+		return this.blackPlayer;
+	}
+	
+	public ArrayList<Piece> getWhitePieces() {
+		return this.whitePieces;
+	}
+	
+	public ArrayList<Piece> getBlackPieces() {
+		return this.blackPieces;
+	}
+	
 	private ArrayList<Move> findLegalMoves(ArrayList<Piece> pieces) {
 		ArrayList<Move> legalMoves = new ArrayList<Move>();
 		
