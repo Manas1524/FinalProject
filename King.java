@@ -33,7 +33,7 @@ public class King extends Piece{
 					//If the square is not occupied by ANY piece, no matter the team, it is legal
 					if(!potentialMoveSquare.isOccupied()) {
 						//Add the piece to the legalMoves list
-						legalMoves.add(new MajorMove(board, this, potentialMoveSquare));
+						legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
 					}
 					else{
 						Piece pieceAtDestination = potentialMoveSquare.getPiece();
@@ -42,11 +42,12 @@ public class King extends Piece{
 						//If there is no piece there/The piece there is of the opposite team
 						if(this.pieceTeam != pieceTeam) {
 							//It is a legal move, so add it to the arrayList
-							legalMoves.add(new Move.AttackMove(board, this, potentialMoveSquare, pieceAtDestination));
+							legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinate, pieceAtDestination));
 						}
 					}
 			}
 		}
+		return legalMoves;
 	}
 	
 	@Override

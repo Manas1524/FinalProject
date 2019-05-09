@@ -51,7 +51,7 @@ public abstract class Piece {
 		ROOK("R"),
 		QUEEN("Q"),
 		KING("K");
-		
+		String pieceName;
 		PieceType(String pieceName){
 			this.pieceName = pieceName;
 		}
