@@ -1,9 +1,9 @@
-package pieces;
+package board;
 
 import pieces.*;
 
 public class Unoccupied_Square extends Square{
-	Unoccupied_Square(int coordinate){
+	public Unoccupied_Square(int coordinate){
 		super(coordinate);
 	}
 
