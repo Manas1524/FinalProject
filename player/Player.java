@@ -25,6 +25,32 @@ public abstract class Player {
 		}
 		throw new RuntimeException("Should not reach here because board doesn't exist anymore");
 	}
-
+	//IMPLEMENT LATER
+	public boolean isLegalMove(Move m) {
+		return this.legalMoves.contains(m);
+	}
+	
+	public boolean inCheck() {
+		return false;
+	}
+	
+	public boolean inCheckMate() {
+		return false;
+	}
+	
+	public boolean inStaleMate() {
+		return false;
+	}
+	
+	public boolean isCastled() {
+		return false;
+	}
+	
+	public MoveTransition makeMove() {
+		return null;
+	}
+	
 	public abstract ArrayList<Piece> getAlivePieces();
+	public abstract Team getTeam();
+	public abstract Player getEnemy();
 }

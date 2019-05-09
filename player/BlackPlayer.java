@@ -14,4 +14,14 @@ public class BlackPlayer extends Player {
 	public ArrayList<Piece> getAlivePieces() {
 		return this.board.getBlackPieces();
 	}
+
+	@Override
+	public Team getTeam() {
+		return Team.BLACK;
+	}
+
+	@Override
+	public Player getEnemy() {
+		return this.board.whitePlayer();
+	}
 }
