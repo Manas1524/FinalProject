@@ -1,9 +1,8 @@
 package pieces;
 import java.util.ArrayList;
 
-import Board.*;
+import board.*;
 import pieces.*;
-
 
 public class Rook extends Piece {
 	
@@ -11,7 +10,7 @@ public class Rook extends Piece {
 	private int position;
 	private Team pieceTeam;
 	
-	public Rook(int position, Team pieceTeam) {
+	public Rook(Team pieceTeam, int position) {
 		super(position, pieceTeam);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
@@ -25,39 +24,39 @@ public class Rook extends Piece {
 	public ArrayList<Move> legalMoves(Board board) 
 	{
 		
-		int potentialMoveCoordinates;
+		int potentialMoveCoordinate;
 		ArrayList<Move> legalMoves = new ArrayList<Move>();
 		
 		for(int possibleMove: potentialMoves) 
 		{
-			potentialMoveCoordinates = this.position;
+			potentialMoveCoordinate = this.position;
 			
-			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates))
+			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate))
 			{
-				if(file1EdgeCase(potentialMoveCoordinates, possibleMove)
-						|| (file8EdgeCase(potentialMoveCoordinates, possibleMove)))
+				if(isFirstColumnExclusion(potentialMoveCoordinate, possibleMove)
+						|| (isEightColumnExclusion(potentialMoveCoordinate, possibleMove)))
 				{
 					break;
 				}
 			}	
-			potentialMoveCoordinates += possibleMove;
+			potentialMoveCoordinate += possibleMove;
 			
 			//If the coordinate is valid (in the chess board)
-			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates)) 
+			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) 
 			{
-				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinates);
+				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
 				
 				if(!potentialMoveSquare.isOccupied()) 
 				{
-					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinates));
+					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
 				}
 				else
 				{
 					Piece pieceAtDestination = potentialMoveSquare.getPiece();
-					Team pieceTeam = pieceAtDestination.getTeam();
+					Team pieceTeam = pieceAtDestination.getPieceTeam();
 					if(this.pieceTeam != pieceTeam)
 					{
-						legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinates, pieceAtDestination));
+						legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinate, pieceAtDestination));
 					}
 					break;
 				}
@@ -66,7 +65,11 @@ public class Rook extends Piece {
 			
 		}
 		return legalMoves;
-		
+	}
+	
+	@Override
+	public String toString() {
+		return Piece.PieceType.ROOK.toString();
 	}
 	
 	/**
@@ -75,10 +78,9 @@ public class Rook extends Piece {
 	 * @param potentialMoveCoordinate
 	 * @return
 	 */
-	public static boolean file1EdgeCase(int currentSquare, int possibleMove)
+	public static boolean isFirstColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		boolean isEdgeCase = (BoardFunctionality.file1[currentSquare] && (possibleMove == -1));
-		return isEdgeCase;
+		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == -1);
 	}
 	
 	/**
@@ -87,10 +89,15 @@ public class Rook extends Piece {
 	 * @param potentialMoveCoordinate
 	 * @return
 	 */
-	public static boolean file8EdgeCase(int currentSquare, int possibleMove)
+	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		boolean isEdgeCase = (BoardFunctionality.file8[currentSquare] && (possibleMove == 1));
-		return isEdgeCase;
+		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == 1);
+	}
+
+	@Override
+	public Piece movePiece(Move move) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

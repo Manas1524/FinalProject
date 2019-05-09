@@ -1,6 +1,7 @@
 package pieces;
 
 import java.util.*;
+
 import board.*;
 
 public class King extends Piece{
@@ -66,5 +67,11 @@ public class King extends Piece{
 		boolean isEdgeCase = (BoardFunctionality.file8[currentSquare] && ((possibleMove == -7) || (possibleMove == 1) || (possibleMove == 9)));
 		
 		return isEdgeCase;
+	}
+
+	@Override
+	public Piece movePiece(Move move) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

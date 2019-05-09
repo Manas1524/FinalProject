@@ -43,6 +43,8 @@ public abstract class Piece {
 		return this.isFirstMove;
 	}
 	
+	public abstract Piece movePiece(Move move);
+	
 	public enum PieceType {
 		
 		PAWN("P"),

@@ -1,7 +1,7 @@
-package pieces;
+package board;
 import java.util.*;
 
-import board.Unoccupied_Square;
+import pieces.*;
 
 public abstract class Square {
 	

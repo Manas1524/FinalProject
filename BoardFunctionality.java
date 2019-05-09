@@ -1,4 +1,4 @@
-package pieces;
+package board;
 
 /**
  * All methods/variables are static so they can be used in other classes without instantiating the object

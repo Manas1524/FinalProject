@@ -48,4 +48,9 @@ public class Pawn extends Piece {
 		
 		return legalMoves;
     }
+	@Override
+	public Piece movePiece(Move move) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

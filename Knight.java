@@ -97,4 +97,9 @@ public class Knight extends Piece{
 		
 		return isEdgeCase;
 	}
+	@Override
+	public Piece movePiece(Move move) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
