@@ -9,11 +9,16 @@ import board.*;
 public abstract class Piece {
 	private int position;
 	private Team pieceTeam;
-	private boolean isFirstMove;
+	private boolean firstMove;
+	private PieceType pieceType;
+	private int code;
 	
-	Piece(int position, Team color){
+	Piece(PieceType pieceType, int position, Team color, boolean firstMove){
 		this.position = position;
 		this.pieceTeam = color;
+		this.pieceType = pieceType;
+		this.firstMove = firstMove;
+		this.code = calculateCode();
 	}
 	
 	public Team getTeam() {
@@ -58,5 +63,14 @@ public abstract class Piece {
 			this.pieceName = pieceName;
 		}
 		
+	}
+	
+	public int calculateCode()
+	{
+		int code = pieceType.hashCode();
+		code = 31 * code + pieceTeam.hashCode();
+		code = 31 * code + position;
+		code = 31 * code + (isFirstMove ? 1:0);
+		return code;
 	}
 }

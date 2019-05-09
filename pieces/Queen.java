@@ -3,6 +3,7 @@ package pieces;
 import java.util.ArrayList;
 
 import board.*;
+import pieces.Piece.PieceType;
 
 public class Queen extends Piece
 {
@@ -11,7 +12,13 @@ public class Queen extends Piece
 	private Team pieceTeam;
 	
 	public Queen(Team pieceTeam, int position) {
-		super(position, pieceTeam);
+		super(PieceType.ROOK, position, pieceTeam, true);
+		this.position = position;
+		this.pieceTeam = pieceTeam;
+	}
+	
+	public Queen(Team pieceTeam, int position, boolean firstMove) {
+		super(PieceType.ROOK, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
@@ -97,8 +104,7 @@ public class Queen extends Piece
 
 	@Override
 	public Piece movePiece(Move move) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Queen(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
 	}
 
 }

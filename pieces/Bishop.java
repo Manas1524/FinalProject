@@ -10,7 +10,13 @@ public class Bishop extends Piece{
 	private Team pieceTeam;
 	
 	public Bishop(Team pieceTeam, int position) {
-		super(position, pieceTeam);
+		super(PieceType.BISHOP, position, pieceTeam, true);
+		this.position = position;
+		this.pieceTeam = pieceTeam;
+	}
+	
+	public Bishop(Team pieceTeam, int position, boolean firstMove) {
+		super(PieceType.BISHOP, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
@@ -96,7 +102,6 @@ public class Bishop extends Piece{
 
 	@Override
 	public Piece movePiece(Move move) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Bishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
 	}
 }

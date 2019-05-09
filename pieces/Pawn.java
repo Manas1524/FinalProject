@@ -1,16 +1,30 @@
 package pieces;
 
 import board.*;
+import pieces.Piece.PieceType;
 
 import java.util.*;
+
+import board.*;
 
 public class Pawn extends Piece {
 
     private int[] possibleMoves = {8, 16, 7, 9};
+    private int position;
+    private Team pieceTeam;
 
-    public Pawn(Team team, int position) {
-        super(position, team);
-    }
+	public Pawn(Team pieceTeam, int position) {
+		super(PieceType.ROOK, position, pieceTeam, true);
+		this.position = position;
+		this.pieceTeam = pieceTeam;
+	}
+	
+	public Pawn(Team pieceTeam, int position, boolean firstMove) {
+		super(PieceType.ROOK, position, pieceTeam, firstMove);
+		this.position = position;
+		this.pieceTeam = pieceTeam;
+	}
+	
     @Override
     public ArrayList<Move> legalMoves(Board board) {
 		ArrayList<Move> legalMoves = new ArrayList<Move>();
@@ -25,14 +39,14 @@ public class Pawn extends Piece {
 			else if(possibleMove == 16 && this.isFirstMove() && (BoardFunctionality.rank2[this.getPosition()]) && this.getPieceTeam().isBlack() || (BoardFunctionality.rank7[this.getPosition()]) && this.getPieceTeam().isWhite()) {
 				int behindPosition = this.getPosition() + (this.getTeam().getDirection() * 8);
 				if(!board.getSquare(behindPosition).isOccupied() && !board.getSquare(potentialMoveCoordinate).isOccupied()) {
-					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
+					legalMoves.add(new PawnJump(board, this, potentialMoveCoordinate));
 				}
 			}
 			else if(possibleMove == 7 && !((BoardFunctionality.file8[this.getPosition()]) && this.getTeam().isWhite() || (BoardFunctionality.file1[this.getPosition()] && this.getTeam().isBlack()))) {
 				if(board.getSquare(potentialMoveCoordinate).isOccupied()) {
 					Piece pieceOnPotential = board.getSquare(potentialMoveCoordinate).getPiece();
 					if(this.getTeam() != pieceOnPotential.getTeam()) {
-						legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
+						legalMoves.add(new PawnAttack(board, this, potentialMoveCoordinate, pieceOnPotential));
 					}
 				}
 			}
@@ -40,7 +54,7 @@ public class Pawn extends Piece {
 				if(board.getSquare(potentialMoveCoordinate).isOccupied()) {
 					Piece pieceOnPotential = board.getSquare(potentialMoveCoordinate).getPiece();
 					if(this.getTeam() != pieceOnPotential.getTeam()) {
-						legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
+						legalMoves.add(new PawnAttack(board, this, potentialMoveCoordinate, pieceOnPotential));
 					}
 				}
 			}
@@ -50,7 +64,6 @@ public class Pawn extends Piece {
     }
 	@Override
 	public Piece movePiece(Move move) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Pawn(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
 	}
 }
