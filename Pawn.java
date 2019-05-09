@@ -8,7 +8,7 @@ public class Pawn extends Piece {
 
     private int[] possibleMoves = {8, 16, 7, 9};
 
-    public Pawn(int position, Team team) {
+    public Pawn(Team team, int position) {
         super(position, team);
     }
     @Override
