@@ -2,7 +2,7 @@ package pieces;
 
 import java.util.ArrayList;
 
-import board.*;
+import Board.*;
 
 public class Queen extends Piece
 {
@@ -10,7 +10,7 @@ public class Queen extends Piece
 	private int position;
 	private Team pieceTeam;
 	
-	public Queen(Team pieceTeam, int position) {
+	public Queen(int position, Team pieceTeam) {
 		super(position, pieceTeam);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
@@ -18,46 +18,45 @@ public class Queen extends Piece
 	
 	/**
 	 * Description: calculates all legal moves
-	 * @param potentialMoveSquare 
 	 * @param: Board 
 	 * @return: ArrayList of possible moves
 	 */
 	public ArrayList<Move> legalMoves(Board board) 
 	{
 		
-		int potentialMoveCoordinate;
+		int potentialMoveCoordinates;
 		ArrayList<Move> legalMoves = new ArrayList<Move>();
 		
 		for(int possibleMove: potentialMoves) 
 		{
-			potentialMoveCoordinate = this.position;
+			potentialMoveCoordinates = this.position;
 			
-			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate))
+			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates))
 			{
-				if(isFirstColumnExclusion(potentialMoveCoordinate, possibleMove)
-						|| (isEightColumnExclusion(potentialMoveCoordinate, possibleMove)))
+				if(file1EdgeCase(potentialMoveCoordinates, possibleMove)
+						|| (file8EdgeCase(potentialMoveCoordinates, possibleMove)))
 				{
 					break;
 				}
 			}	
-			potentialMoveCoordinate += possibleMove;
+			potentialMoveCoordinates += possibleMove;
 			
 			//If the coordinate is valid (in the chess board)
-			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) 
+			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinates)) 
 			{
-				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
+				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinates);
 				
 				if(!potentialMoveSquare.isOccupied()) 
 				{
-					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
+					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinates));
 				}
 				else
 				{
 					Piece pieceAtDestination = potentialMoveSquare.getPiece();
-					Team pieceTeam = pieceAtDestination.getPieceTeam();
+					Team pieceTeam = pieceAtDestination.getTeam();
 					if(this.pieceTeam != pieceTeam)
 					{
-						legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinate, pieceAtDestination));
+						legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinates, pieceAtDestination));
 					}
 					break;
 				}
@@ -66,11 +65,7 @@ public class Queen extends Piece
 			
 		}
 		return legalMoves;
-	}
-	
-	@Override
-	public String toString() {
-		return Piece.PieceType.QUEEN.toString();
+		
 	}
 	
 	/**
@@ -79,20 +74,23 @@ public class Queen extends Piece
 	 * @param potentialMoveCoordinate
 	 * @return
 	 */
-	public static boolean isFirstColumnExclusion(int currentPosition, int potentialMoveCoordinate)
+	public static boolean file1EdgeCase(int currentSquare, int possibleMove)
 	{
-		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == -1 || potentialMoveCoordinate == -1);
+		boolean isEdgeCase = (BoardFunctionality.file1[currentSquare] && (possibleMove == 1) || possibleMove == -1 || possibleMove == -9 || possibleMove == 7);
+		return isEdgeCase;
 	}
 	
 	/**
-	 * Description: checks if queen is in eighth column to prevent illegal move
+	 * Description: checks if rook is in eighth column to prevent illegal move
 	 * @param currentPosition
 	 * @param potentialMoveCoordinate
 	 * @return
 	 */
-	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
+	public static boolean file8EdgeCase(int currentSquare, int possibleMove)
 	{
-		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 1 || potentialMoveCoordinate == 1);
+		boolean isEdgeCase = (BoardFunctionality.file8[currentSquare] && (possibleMove == 1) || possibleMove == -1 || possibleMove == 9 || possibleMove == -7);
+		return isEdgeCase;
 	}
-
+	 
+	 
 }
