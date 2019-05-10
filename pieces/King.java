@@ -77,7 +77,8 @@ public class King extends Piece{
 	}
 
 	@Override
+	@Override
 	public Piece movePiece(Move move) {
-		return new King(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
 	}
 }

@@ -3,6 +3,7 @@ package pieces;
 import java.util.ArrayList;
 
 import board.*;
+import pieces.BoardFunctionality;
 import pieces.Piece.PieceType;
 
 public class Queen extends Piece
@@ -23,12 +24,6 @@ public class Queen extends Piece
 		this.pieceTeam = pieceTeam;
 	}
 	
-	/**
-	 * Description: calculates all legal moves
-	 * @param potentialMoveSquare 
-	 * @param: Board 
-	 * @return: ArrayList of possible moves
-	 */
 	public ArrayList<Move> legalMoves(Board board) 
 	{
 		
@@ -52,16 +47,17 @@ public class Queen extends Piece
 			//If the coordinate is valid (in the chess board)
 			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) 
 			{
-				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
+				Piece pieceAtDestination = board.getPiece(potentialMoveCoordinate);
 				
-				if(!potentialMoveSquare.isOccupied()) 
+				if(pieceAtDestination == null) 
 				{
 					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
 				}
 				else
 				{
-					Piece pieceAtDestination = potentialMoveSquare.getPiece();
+					
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
+					
 					if(this.pieceTeam != pieceTeam)
 					{
 						legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinate, pieceAtDestination));
@@ -75,11 +71,20 @@ public class Queen extends Piece
 		return legalMoves;
 	}
 	
-	@Override
-	public String toString() {
-		return Piece.PieceType.QUEEN.toString();
+	public int bonus()
+	{
+		return this.pieceTeam.queenBonus(this.position);
 	}
 	
+	@Override
+	public String toString() {
+		return this.PieceType.toString();
+	}
+	
+	@Override
+	public Piece movePiece(Move move) {
+		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
+	}
 	/**
 	 * Description: checks if queen is in first column to prevent illegal move
 	 * @param currentPosition
@@ -102,9 +107,6 @@ public class Queen extends Piece
 		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 1 || potentialMoveCoordinate == 1);
 	}
 
-	@Override
-	public Piece movePiece(Move move) {
-		return new Queen(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
-	}
+
 
 }
