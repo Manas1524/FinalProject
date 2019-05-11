@@ -15,4 +15,9 @@ public class AttackingMove extends Move {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Board execute() {
+		return null;
+	}
 }
