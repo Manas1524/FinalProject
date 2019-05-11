@@ -51,17 +51,16 @@ public class Rook extends Piece {
 			//If the coordinate is valid (in the chess board)
 			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) 
 			{
-				Piece pieceAtDestination = board.getPiece(potentialMoveCoordinate);
+				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
 				
-				if(pieceAtDestination == null) 
+				if(!potentialMoveSquare.isOccupied()) 
 				{
 					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
 				}
 				else
 				{
-					
+					Piece pieceAtDestination = potentialMoveSquare.getPiece();
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
-					
 					if(this.pieceTeam != pieceTeam)
 					{
 						legalMoves.add(new AttackingMove(board, this, potentialMoveCoordinate, pieceAtDestination));
@@ -75,20 +74,11 @@ public class Rook extends Piece {
 		return legalMoves;
 	}
 	
-	public int bonus()
-	{
-		return this.pieceTeam.bishopBonus(this.position);
-	}
-	
 	@Override
 	public String toString() {
-		return this.PieceType.toString();
+		return Piece.PieceType.ROOK.toString();
 	}
 	
-	@Override
-	public Piece movePiece(Move move) {
-		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
-	}
 	/**
 	 * Description: checks if rook is in first column to prevent illegal move
 	 * @param currentPosition
@@ -111,6 +101,9 @@ public class Rook extends Piece {
 		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == 1);
 	}
 
-	
+	@Override
+	public Piece movePiece(Move move) {
+		return new Rook(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+	}
 
 }

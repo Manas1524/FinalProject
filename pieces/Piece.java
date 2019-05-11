@@ -9,7 +9,7 @@ import board.*;
 public abstract class Piece {
 	private int position;
 	private Team pieceTeam;
-	private boolean isFirstMove;
+	private boolean firstMove;
 	private PieceType pieceType;
 	private int code;
 	
@@ -17,7 +17,7 @@ public abstract class Piece {
 		this.position = position;
 		this.pieceTeam = color;
 		this.pieceType = pieceType;
-		this.isFirstMove = firstMove;
+		this.firstMove = firstMove;
 		this.code = calculateCode();
 	}
 	
@@ -45,23 +45,55 @@ public abstract class Piece {
 	 * @return isFirstMove
 	 */
 	public boolean isFirstMove() {
-		return this.isFirstMove;
+		return this.firstMove;
 	}
 	
 	public abstract Piece movePiece(Move move);
 	
 	public enum PieceType {
 		
-		PAWN("P"),
-		KNIGHT("N"),
-		BISHOP("B"),
-		ROOK("R"),
-		QUEEN("Q"),
-		KING("K");
+		PAWN("P") {
+			@Override
+			public boolean isKing() {
+				return false;
+			}
+		},
+		KNIGHT("N") {
+			@Override
+			public boolean isKing() {		
+				return false;
+			}
+		},
+		BISHOP("B") {
+			@Override
+			public boolean isKing() {			
+				return false;
+			}
+		},
+		ROOK("R") {
+			@Override
+			public boolean isKing() {			
+				return false;
+			}
+		},
+		QUEEN("Q") {
+			@Override
+			public boolean isKing() {			
+				return false;
+			}
+		},
+		KING("K") {
+			@Override
+			public boolean isKing() {
+				return true;
+			}
+		};
 		String pieceName;
 		PieceType(String pieceName){
 			this.pieceName = pieceName;
 		}
+		
+		public abstract boolean isKing();
 		
 	}
 	
@@ -109,6 +141,6 @@ public abstract class Piece {
 	}
 
 	public void setFirstMove(boolean firstMove) {
-		this.isFirstMove = firstMove;
+		this.firstMove = firstMove;
 	}
 }

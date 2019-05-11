@@ -35,7 +35,7 @@ public abstract class Move {
 		return endCoordinate;
 	}
 	
-	
+	public abstract Board execute();
 	
 	public int calculateCode()
 	{
