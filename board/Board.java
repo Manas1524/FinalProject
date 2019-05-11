@@ -78,13 +78,19 @@ public class Board {
 		return legalMoves;
 	}
 
+	public ArrayList<Move> findAllLegalMoves() {
+        ArrayList<Move> allMoves = this.whitePlayer.getLegalMoves();
+        allMoves.addAll(this.blackPlayer.getLegalMoves());
+        return allMoves;
+    }
+	
 	private ArrayList<Piece> findAlivePieces(ArrayList<Square> gameBoard, Team team) {
 		ArrayList<Piece> alivePieces = new ArrayList<Piece>();
 		
 		for(Square square: gameBoard) {
 			if(square.isOccupied()) {
 				Piece piece = square.getPiece();
-				if(piece.getPieceTeam() == team) {
+				if(piece.getTeam() == team) {
 					alivePieces.add(piece);
 				}
 			}

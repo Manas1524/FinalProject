@@ -1,17 +1,21 @@
 package board;
 
-import board.Board.Builder;
+import board.Board.*;
 import pieces.*;
+import player.*;
 
 public abstract class Castle extends Move{
 	Rook rook;
 	int rookStartCoordinate;
 	int rookEndCoordinate;
+	Board board;
+	
 	public Castle(Board board, Piece piece, int endCoordinate, Rook rook, int rookStartCoordinate, int rookEndCoordinate){
 		super(board,piece,endCoordinate);
 		this.rook = rook;
 		this.rookStartCoordinate = rookStartCoordinate;
 		this.rookEndCoordinate = rookEndCoordinate;
+		this.board = board;
 	}
 	
 	public Rook getCastleRook() {

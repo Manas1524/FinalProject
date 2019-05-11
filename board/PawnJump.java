@@ -4,8 +4,12 @@ import board.Board.Builder;
 import pieces.*;
 
 public class PawnJump extends Move{
+	
+	Board board;
+	
 	public PawnJump(Board board, Piece piece, int endCoordinate){
 		super(board,piece,endCoordinate);
+		this.board = board;
 	}
 	
 	public Board doMove() {

@@ -4,10 +4,10 @@ import board.Board.Builder;
 import pieces.Piece;
 
 public abstract class Move {
-	final Board board;
-	final Piece piece;
-	final int endCoordinate;
-	final static Move WRONG_MOVE = new WrongMove();
+	private Board board;
+	public static Piece piece;
+	private static int endCoordinate;
+	private static Move WRONG_MOVE = new WrongMove();
 	public Move(Board board, Piece piece, int endCoordinate){
 		this.board = board;
 		this.piece = piece;
@@ -18,11 +18,11 @@ public abstract class Move {
 		return board;
 	}
 
-	public Piece getPiece() {
+	public static Piece getPiece() {
 		return piece;
 	}
 
-	public int getEndCoordinate() {
+	public static int getEndCoordinate() {
 		return endCoordinate;
 	}
 	

@@ -6,7 +6,7 @@ public class MoveFunctionality {
 	}
 	
 	public Move makeMove(Board board, int startCoordinate, int endCoordinate) {
-		for(Move move: board.findLegalMoves()) {
+		for(Move move: board.findAllLegalMoves()) {
 			if(move.getStartCoordinate() == startCoordinate && move.getEndCoordinate() == endCoordinate) {
 				return move;
 			}

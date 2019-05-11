@@ -1,10 +1,15 @@
 package board;
 
-public class ChessDriver {
-	public static void main(String args[]) {
+import java.awt.Frame;
+
+import board.Board;
+
+public class ChessDriver 
+{
+	public static void main(String[] args) 
+	{
 		Board board = Board.createStartingBoard();
-				
-		System.out.println(board);	
+		System.out.println(board);
+		Frame frame = new Frame();
 	}
-	
 }
