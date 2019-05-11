@@ -1,6 +1,8 @@
 package board;
 
 import java.util.*;
+
+import board.Board.Builder;
 import player.*;
 import pieces.*;
 
@@ -76,13 +78,19 @@ public class Board {
 		return legalMoves;
 	}
 
+	public ArrayList<Move> findAllLegalMoves() {
+        ArrayList<Move> allMoves = this.whitePlayer.getLegalMoves();
+        allMoves.addAll(this.blackPlayer.getLegalMoves());
+        return allMoves;
+    }
+	
 	private ArrayList<Piece> findAlivePieces(ArrayList<Square> gameBoard, Team team) {
 		ArrayList<Piece> alivePieces = new ArrayList<Piece>();
 		
 		for(Square square: gameBoard) {
 			if(square.isOccupied()) {
 				Piece piece = square.getPiece();
-				if(piece.getPieceTeam() == team) {
+				if(piece.getTeam() == team) {
 					alivePieces.add(piece);
 				}
 			}
@@ -153,6 +161,7 @@ public class Board {
 		Map<Integer, Piece> boardConfig;
 		//Makes the next move (this is the team of the next move)
 		Team nextMove;
+		Pawn enPassantPawn;
 		
 		public Builder() {
 			this.boardConfig = new HashMap<>();
@@ -170,6 +179,11 @@ public class Board {
 		public Board build() {
 			Board b = new Board(this);
 			return b;
+		}
+
+		public void setEnPassantPawn(Pawn movedPawn) {
+			// TODO Auto-generated method stub
+			this.enPassantPawn = movedPawn;
 		}
 	}
 }
