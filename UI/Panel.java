@@ -3,18 +3,18 @@ package UI;
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
-import Board.*;
+
+import board.*;
 import pieces.*;
 
 public class Panel extends JPanel
 {
-	private ArrayList<CButt> squares;
+	private ArrayList<CButt> squares = new ArrayList<>();;
 	
 	public Panel()
 	{
 		super(new GridLayout(8,8));
-		squares = new ArrayList<>();
-		
+
 		for(int i = 0; i < 8; i++)
 		{
 			CButt b = new CButt(this, i);
@@ -22,6 +22,7 @@ public class Panel extends JPanel
 			add(b);
 			
 		}
+		setPreferredSize(new Dimension(400, 350));
 		validate();
 		
 			
@@ -32,7 +33,7 @@ public class Panel extends JPanel
 		removeAll();
 		for(CButt c : squares)
 		{
-			board.drawSquare(board);
+			c.drawSquare(board);
 			add(c);
 		}
 		validate();
