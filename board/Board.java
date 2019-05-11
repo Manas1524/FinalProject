@@ -13,7 +13,6 @@ public class Board {
 	
 	private WhitePlayer whitePlayer;
 	private BlackPlayer blackPlayer;
-	private Player currentPlayer;
 	
 	public Board(Builder builder) {
 		this.gameBoard = makeBoard(builder);
@@ -25,7 +24,6 @@ public class Board {
 		
 		this.whitePlayer =  new WhitePlayer(this, standardWhiteMoves, standardBlackMoves);
 		this.blackPlayer =  new BlackPlayer(this, standardWhiteMoves, standardBlackMoves);
-		this.currentPlayer = null;
 	}
 	
 	
@@ -52,10 +50,6 @@ public class Board {
 	
 	public Player blackPlayer() {
 		return this.blackPlayer;
-	}
-	
-	public Player currentPlayer() {
-		return this.currentPlayer;
 	}
 	
 	public ArrayList<Piece> getWhitePieces() {
@@ -153,6 +147,7 @@ public class Board {
 		Map<Integer, Piece> boardConfig;
 		//Makes the next move (this is the team of the next move)
 		Team nextMove;
+		Pawn enPassantPawn;
 		
 		public Builder() {
 			this.boardConfig = new HashMap<>();
@@ -170,6 +165,11 @@ public class Board {
 		public Board build() {
 			Board b = new Board(this);
 			return b;
+		}
+
+		public void setEnPassantPawn(Pawn movedPawn) {
+			// TODO Auto-generated method stub
+			this.enPassantPawn = movedPawn;
 		}
 	}
 }
