@@ -1,6 +1,8 @@
 package board;
 
 import java.util.*;
+
+import board.Board.Builder;
 import player.*;
 import pieces.*;
 
@@ -153,6 +155,7 @@ public class Board {
 		Map<Integer, Piece> boardConfig;
 		//Makes the next move (this is the team of the next move)
 		Team nextMove;
+		Pawn enPassantPawn;
 		
 		public Builder() {
 			this.boardConfig = new HashMap<>();
@@ -170,6 +173,11 @@ public class Board {
 		public Board build() {
 			Board b = new Board(this);
 			return b;
+		}
+
+		public void setEnPassantPawn(Pawn movedPawn) {
+			// TODO Auto-generated method stub
+			this.enPassantPawn = movedPawn;
 		}
 	}
 }

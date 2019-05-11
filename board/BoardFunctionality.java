@@ -14,14 +14,8 @@ public class BoardFunctionality {
 	public static boolean[] file8 = createFile(7);
 	
 	//Number is the square that begins the row
-	public static boolean[] rank1 = createRank(0);
 	public static boolean[] rank2 = createRank(8);
-	public static boolean[] rank3 = createRank(16);
-	public static boolean[] rank4 = createRank(24);
-	public static boolean[] rank5 = createRank(32);
-	public static boolean[] rank6 = createRank(40);
 	public static boolean[] rank7 = createRank(48);
-	public static boolean[] rank8 = createRank(56);
 	
 	public static final int SQUARE_AMOUNT = 64;
 	public static final int SQUARES_PER_ROW = 8;
@@ -45,16 +39,6 @@ public class BoardFunctionality {
 			return true;
 		}	
 		return false;
-	}
-	
-	public static int getCoordinate(String position)
-	{
-		return makePositionMap().get(position);
-	}
-	
-	public static int getPosition(int coordinate)
-	{
-		return makeAlgebreicNotation()[coordinate];
 	}
 	
 	public static boolean[] createFile(int columnNumber) {
