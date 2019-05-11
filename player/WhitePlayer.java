@@ -1,13 +1,20 @@
 package player;
 
-import pieces.*;
+import pieces.Piece;
 import board.*;
+import pieces.*;
 import java.util.*;
 
 public class WhitePlayer extends Player {
+	private Board board;
+	private ArrayList<Move> standardWhiteMoves;
+	private ArrayList<Move> standardBlackMoves;
 	
 	public WhitePlayer(Board board, ArrayList<Move> standardWhiteMoves, ArrayList<Move> standardBlackMoves) {
 		super(board, standardWhiteMoves, standardBlackMoves);
+		this.board = board;
+		this.standardWhiteMoves = standardWhiteMoves;
+		this.standardBlackMoves = standardBlackMoves;
 	}
 
 	@Override
@@ -24,4 +31,5 @@ public class WhitePlayer extends Player {
 	public Player getEnemy() {
 		return this.board.blackPlayer();
 	}
+
 }
