@@ -106,6 +106,6 @@ public class Knight extends Piece{
 	}
 	@Override
 	public Piece movePiece(Move move) {
-		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
+		return new Knight(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
 	}
 }
