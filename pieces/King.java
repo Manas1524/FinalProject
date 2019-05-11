@@ -62,7 +62,8 @@ public class King extends Piece{
 	public String toString() {
 		return Piece.PieceType.KING.toString();
 	}
-	
+
+
 	public static boolean file1EdgeCase(int currentSquare, int possibleMove) {
 		boolean isEdgeCase = (BoardFunctionality.file1[currentSquare] && ((possibleMove == -9) || (possibleMove == -1)
 				|| (possibleMove == 7)));
@@ -78,6 +79,6 @@ public class King extends Piece{
 
 	@Override
 	public Piece movePiece(Move move) {
-		return new King(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+		return new King(ImportantMove.getPiece().getTeam(), ImportantMove.getEndCoordinate());
 	}
 }

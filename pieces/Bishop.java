@@ -73,6 +73,7 @@ public class Bishop extends Piece{
 		return legalMoves;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return Piece.PieceType.BISHOP.toString();
@@ -102,6 +103,6 @@ public class Bishop extends Piece{
 
 	@Override
 	public Piece movePiece(Move move) {
-		return new Bishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+		return new Bishop(ImportantMove.getPiece().getTeam(), ImportantMove.getEndCoordinate());
 	}
 }

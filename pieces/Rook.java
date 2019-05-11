@@ -103,7 +103,7 @@ public class Rook extends Piece {
 
 	@Override
 	public Piece movePiece(Move move) {
-		return new Rook(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+		return new Rook(ImportantMove.getPiece().getTeam(), ImportantMove.getEndCoordinate());
 	}
 
 }

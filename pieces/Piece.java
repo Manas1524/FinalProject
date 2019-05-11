@@ -57,10 +57,20 @@ public abstract class Piece {
 			public boolean isKing() {
 				return false;
 			}
+
+			@Override
+			public boolean isRook() {
+				return false;
+			}
 		},
 		KNIGHT("N") {
 			@Override
 			public boolean isKing() {		
+				return false;
+			}
+
+			@Override
+			public boolean isRook() {
 				return false;
 			}
 		},
@@ -69,16 +79,31 @@ public abstract class Piece {
 			public boolean isKing() {			
 				return false;
 			}
+
+			@Override
+			public boolean isRook() {
+				return false;
+			}
 		},
 		ROOK("R") {
 			@Override
 			public boolean isKing() {			
 				return false;
 			}
+
+			@Override
+			public boolean isRook() {
+				return true;
+			}
 		},
 		QUEEN("Q") {
 			@Override
 			public boolean isKing() {			
+				return false;
+			}
+
+			@Override
+			public boolean isRook() {
 				return false;
 			}
 		},
@@ -87,6 +112,11 @@ public abstract class Piece {
 			public boolean isKing() {
 				return true;
 			}
+
+			@Override
+			public boolean isRook() {
+				return false;
+			}
 		};
 		String pieceName;
 		PieceType(String pieceName){
@@ -94,7 +124,7 @@ public abstract class Piece {
 		}
 		
 		public abstract boolean isKing();
-		
+		public abstract boolean isRook();
 	}
 	
 	public int calculateCode()

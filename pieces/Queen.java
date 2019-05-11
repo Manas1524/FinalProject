@@ -104,7 +104,7 @@ public class Queen extends Piece
 
 	@Override
 	public Piece movePiece(Move move) {
-		return new Queen(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+		return new Queen(ImportantMove.getPiece().getTeam(), ImportantMove.getEndCoordinate());
 	}
 
 }
