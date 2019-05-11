@@ -12,7 +12,7 @@ public abstract class Player {
 	protected ArrayList<Move> legalMoves;
 	private boolean inCheck;
 	
-	public Player(Board board, ArrayList<Move> allowedMoves, ArrayList<Move> enemyMoves) {
+	public Player(Board board, ArrayList<Move> legalMoves, ArrayList<Move> enemyMoves) {
 		this.board = board;
 		this.playerKing = createKing();
 		this.legalMoves = legalMoves;
@@ -78,7 +78,7 @@ public abstract class Player {
 			return new MoveTransition(this.board, move, MoveStatus.ILLEGAL_MOVE);
 		}
 		//If illegal, make new board
-		Board transitionBoard = move.execute();
+		Board transitionBoard = move.doMove();
 		
 		ArrayList<Move> kingAttack = Player.getAttackOnSquare(transitionBoard.currentPlayer().getEnemy().getPlayerKing().getPosition(),
 															  transitionBoard.currentPlayer().getLegalMoves());
