@@ -6,8 +6,8 @@ import javax.swing.*;
 
 
 import pieces.*;
-import Board.*;
 import UI.Frame;
+import board.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -25,7 +25,7 @@ public class CButt extends JPanel
 	{
 		super(new GridBagLayout());
 		this.square = square;
-		setPreferredSize(new Dimension(100,100));
+		setPreferredSize(new Dimension(10,10));
 		addMouseListener(new MouseListener() {
 			
 			@Override
@@ -55,13 +55,14 @@ public class CButt extends JPanel
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
+				if(BoardFunctionality.isEndGame(Frame.getNewFrame().getCboard())) {
+	                        return;
+				
 				//cancel move
 				if(SwingUtilities.isRightMouseButton(e))
 				{
 					Frame.setClick(null);
-					Frame.setDestination(null);
 					Frame.setPiece(null);
-					
 
 				}	
 				//move
@@ -70,8 +71,8 @@ public class CButt extends JPanel
 					//no selection
 					if(Frame.getClick() == null)
 					{
-						Frame.setClick(Frame.getCboard().getSquare(square));
-						Frame.setPiece(Frame.getClick().getPiece());
+						Frame.setClick(Frame.getCboard().getPiece(square));
+						Frame.setPiece(Frame.getClick());
 						if(Frame.getPiece() == null)
 						{
 							Frame.setClick(null);
@@ -81,16 +82,13 @@ public class CButt extends JPanel
 					//move to destination
 					else
 					{
-						Frame.setDestination(Frame.getCboard().getSquare(square));
-						Move move = Move.MoveFactory.createMove(Frame.getCboard(), Frame.getClick()
-								.getSquareCoordinate(), Frame.getDestination().getSquareCoordinate());
+						Move move = MoveFunctionality.createMove(Frame.getCboard(), Frame.getClick().getPosition());
 						MoveTransition transition = Frame.getCboard().currentPlayer().makeMove(move);
 						if(transition.getMoveStatus().isDone())
 						{
-							Frame.setCboard(transition.getBoard());
+							Frame.setCboard(transition.getToBoard());
 						}
 						Frame.setClick(null);
-						Frame.setDestination(null);
 						Frame.setPiece(null);
 						
 						
@@ -101,28 +99,26 @@ public class CButt extends JPanel
 						{
 							Panel.draw(Frame.getCboard());
 						}
-					}
-							
-							);
+					});
 				}
-			
 			}
-		});
+			
+		}
+	});
 		
-		Color();
-		Icon(Frame.getCboard());
 		validate();
 	}
 	
 	public void drawSquare(Board board)
 	{
-		Color();
-		Icon(board);
+		color();
+		icon(board);
+		highlight(board);
 		validate();
 		repaint();
 	}
 	
-	public void Icon(Board board)
+	public void icon(Board board)
 	{
 		this.removeAll();
 		if(board.getSquare(square).isOccupied())
@@ -130,8 +126,8 @@ public class CButt extends JPanel
 			
 			try 
 			{
-			BufferedImage piece = ImageIO.read(Frame.getPiecePath() + board.getSquare(square).getPiece()
-					.getTeam().toString().substring(0, 1) + board.getSquare(square).getPiece().toString() + ".png");
+			BufferedImage piece = ImageIO.read(Frame.getPiecePath() + board.getPiece(square).Team()
+				.toString().substring(0, 1) + "" + board.getPiece(square).toString() + ".png");
 			add(new JLabel(new ImageIcon(piece)));
 			}
 			catch(Exception e)
@@ -141,7 +137,7 @@ public class CButt extends JPanel
 		}
 	}
 	
-	public void Color()
+	public void color()
 	{
 		if(BoardFunctionality.rank1[square] || BoardFunctionality.rank3[square] ||
 		BoardFunctionality.rank5[square] || BoardFunctionality.rank7[square])
@@ -156,6 +152,24 @@ public class CButt extends JPanel
 		}
 		
 	}
+	
+	private void highlight(final Board board) 
+	{
+            for (Move move : legalMoves(board)) {
+                if (move.getEndCoordinate() == this.square) {
+                    setBackground(Color.GREEN);
+                }
+            }
+        
+    }
+	
+	private Collection<Move> pieceLegalMoves(final Board board) {
+        if(Frame.getPiece() != null && Frame.getPiece().getTeam() == board.currentPlayer().getTeam()) 
+        {
+            return Frame.getPiece().legalMoves(board);
+        }
+        return Collections.emptyList();
+    }
 	
 	public void showLegalMoves(Board board)
 	{
@@ -177,7 +191,7 @@ public class CButt extends JPanel
 	{
 		if(Frame.getClick() != null && Frame.getClick().getTeam() == board.currentPlayer().getTeam())
 		{
-			return Frame.getClick().calculateLegalMoves(board);
+			return Frame.getClick().legalMoves(board);
 		}
 		return Collections.emptyList();
 	}
