@@ -69,11 +69,7 @@ public class Knight extends Piece{
 		}
 		return legalMoves;
 	}
-	
-	@Override
-	public String toString() {
-		return Piece.PieceType.KNIGHT.toString();
-	}
+
 	
 	public static boolean file1EdgeCase(int currentSquare, int possibleMove) {
 		/**
@@ -104,7 +100,16 @@ public class Knight extends Piece{
 		
 		return isEdgeCase;
 	}
-	@Override
+	
+	public int bonus()
+	{
+		return this.pieceTeam.knightBonus(this.position);
+	}
+	
+	public String toString() {
+		return this.getPieceType().toString();
+	}
+
 	public Piece movePiece(Move move) {
 		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
 	}

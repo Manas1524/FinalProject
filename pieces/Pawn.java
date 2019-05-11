@@ -62,6 +62,10 @@ public class Pawn extends Piece {
 		
 		return legalMoves;
     }
+	
+	public String toString() {
+		return this.getPieceType().toString();
+	}
 	@Override
 	public Piece movePiece(Move move) {
 		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());

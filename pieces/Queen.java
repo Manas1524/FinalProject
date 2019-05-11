@@ -76,9 +76,8 @@ public class Queen extends Piece
 		return this.pieceTeam.queenBonus(this.position);
 	}
 	
-	@Override
 	public String toString() {
-		return this.PieceType.toString();
+		return this.getPieceType().toString();
 	}
 	
 	@Override

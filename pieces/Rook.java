@@ -77,12 +77,11 @@ public class Rook extends Piece {
 	
 	public int bonus()
 	{
-		return this.pieceTeam.bishopBonus(this.position);
+		return this.pieceTeam.rookBonus(this.position);
 	}
 	
-	@Override
 	public String toString() {
-		return this.PieceType.toString();
+		return this.getPieceType().toString();
 	}
 	
 	@Override

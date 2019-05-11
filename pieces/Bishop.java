@@ -80,7 +80,7 @@ public class Bishop extends Piece{
 	
 	@Override
 	public String toString() {
-		return this.PieceType.toString();
+		return this.getPieceType().toString();
 	}
 	
 	@Override
