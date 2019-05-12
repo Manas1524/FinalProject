@@ -3,7 +3,6 @@ package pieces;
 import java.util.ArrayList;
 
 import board.*;
-import pieces.BoardFunctionality;
 import pieces.Piece.PieceType;
 
 public class Queen extends Piece
@@ -47,7 +46,7 @@ public class Queen extends Piece
 			//If the coordinate is valid (in the chess board)
 			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) 
 			{
-				Piece pieceAtDestination = board.getPiece(potentialMoveCoordinate);
+				Piece pieceAtDestination = board.getSquare(potentialMoveCoordinate).getPiece();
 				
 				if(pieceAtDestination == null) 
 				{
@@ -71,19 +70,10 @@ public class Queen extends Piece
 		return legalMoves;
 	}
 	
-	public int bonus()
-	{
-		return this.pieceTeam.queenBonus(this.position);
-	}
-	
 	public String toString() {
 		return this.getPieceType().toString();
 	}
-	
-	@Override
-	public Piece movePiece(Move move) {
-		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
-	}
+
 	/**
 	 * Description: checks if queen is in first column to prevent illegal move
 	 * @param currentPosition
@@ -104,6 +94,10 @@ public class Queen extends Piece
 	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
 		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 1 || potentialMoveCoordinate == 1);
+	}
+	
+	public Piece movePiece(Move move) {
+		return null;
 	}
 
 

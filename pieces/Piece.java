@@ -2,8 +2,6 @@ package pieces;
 
 import java.util.ArrayList;
 
-//import Board.Move;
-import UI.Gameboard;
 import board.*;
 import pieces.Team;
 

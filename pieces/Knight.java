@@ -40,7 +40,7 @@ public class Knight extends Piece{
 			
 			//If the coordinate is valid (in the chess board)
 			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) {
-				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
+				Piece potentialMoveSquare = board.getSquare(potentialMoveCoordinate).getPiece();
 				
 				//
 				if( file1EdgeCase(this.position, possibleMove) == true ||
@@ -51,12 +51,12 @@ public class Knight extends Piece{
 				}
 				
 				//If the square is not occupied by ANY piece, no matter the team, it is legal
-				if(!potentialMoveSquare.isOccupied()) {
+				if(potentialMoveSquare == null) {
 					//Add the piece to the legalMoves list
 					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
 				}
 				else{
-					Piece pieceAtDestination = potentialMoveSquare.getPiece();
+					Piece pieceAtDestination = potentialMoveSquare;
 					Team pieceTeam = pieceAtDestination.getTeam();
 					
 					//If there is no piece there/The piece there is of the opposite team
@@ -101,16 +101,12 @@ public class Knight extends Piece{
 		return isEdgeCase;
 	}
 	
-	public int bonus()
-	{
-		return this.pieceTeam.knightBonus(this.position);
-	}
-	
 	public String toString() {
 		return this.getPieceType().toString();
 	}
-
+	
 	public Piece movePiece(Move move) {
-		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
+		return null;
 	}
+
 }

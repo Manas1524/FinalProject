@@ -49,7 +49,7 @@ public class Bishop extends Piece{
 			//If the coordinate is valid (in the chess board)
 			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) 
 			{
-				Piece pieceAtDestination = board.getPiece(potentialMoveCoordinate);
+				Piece pieceAtDestination = board.getSquare(potentialMoveCoordinate).getPiece();
 				
 				if(pieceAtDestination == null) 
 				{
@@ -73,20 +73,13 @@ public class Bishop extends Piece{
 		return legalMoves;
 	}
 	
-	public int bonus()
-	{
-		return this.pieceTeam.bishopBonus(this.position);
-	}
+
 	
 	@Override
 	public String toString() {
 		return this.getPieceType().toString();
 	}
 	
-	@Override
-	public Piece movePiece(Move move) {
-		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
-	}
 	
 	/**
 	 * Description: checks if bishop is in first column to prevent illegal move
@@ -108,6 +101,10 @@ public class Bishop extends Piece{
 	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
 		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 9 || potentialMoveCoordinate == -7);
+	}
+	
+	public Piece movePiece(Move move) {
+		return null;
 	}
 
 

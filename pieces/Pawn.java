@@ -46,7 +46,7 @@ public class Pawn extends Piece {
 				if(board.getSquare(potentialMoveCoordinate).isOccupied()) {
 					Piece pieceOnPotential = board.getSquare(potentialMoveCoordinate).getPiece();
 					if(this.getTeam() != pieceOnPotential.getTeam()) {
-						legalMoves.add(new PawnAttack(board, this, potentialMoveCoordinate, pieceOnPotential));
+						legalMoves.add(new PawnAttackingMove(board, this, potentialMoveCoordinate, pieceOnPotential));
 					}
 				}
 			}
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
 				if(board.getSquare(potentialMoveCoordinate).isOccupied()) {
 					Piece pieceOnPotential = board.getSquare(potentialMoveCoordinate).getPiece();
 					if(this.getTeam() != pieceOnPotential.getTeam()) {
-						legalMoves.add(new PawnAttack(board, this, potentialMoveCoordinate, pieceOnPotential));
+						legalMoves.add(new PawnAttackingMove(board, this, potentialMoveCoordinate, pieceOnPotential));
 					}
 				}
 			}
@@ -66,8 +66,8 @@ public class Pawn extends Piece {
 	public String toString() {
 		return this.getPieceType().toString();
 	}
-	@Override
+
 	public Piece movePiece(Move move) {
-		return PieceFunctionality.INSTANCE.getMovedBishop(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getEndCoordinate());
+		return null;
 	}
 }
