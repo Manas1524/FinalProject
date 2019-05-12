@@ -2,14 +2,13 @@ package pieces;
 
 import java.util.ArrayList;
 
-//import Board.Move;
-import UI.Gameboard;
 import board.*;
+import pieces.Team;
 
 public abstract class Piece {
 	private int position;
 	private Team pieceTeam;
-	private boolean firstMove;
+	private boolean isFirstMove;
 	private PieceType pieceType;
 	private int code;
 	
@@ -17,7 +16,7 @@ public abstract class Piece {
 		this.position = position;
 		this.pieceTeam = color;
 		this.pieceType = pieceType;
-		this.firstMove = firstMove;
+		this.isFirstMove = firstMove;
 		this.code = calculateCode();
 	}
 	
@@ -40,66 +39,135 @@ public abstract class Piece {
 	public Team getPieceTeam() {
 		return pieceTeam;
 	}
-	
+
 	/**
 	 * @return isFirstMove
 	 */
 	public boolean isFirstMove() {
-		return this.firstMove;
+		return this.isFirstMove;
 	}
 	
 	public abstract Piece movePiece(Move move);
 	
+	
 	public enum PieceType {
 		
-		PAWN("P") {
-			@Override
-			public boolean isKing() {
-				return false;
-			}
-		},
-		KNIGHT("N") {
-			@Override
-			public boolean isKing() {		
-				return false;
-			}
-		},
-		BISHOP("B") {
-			@Override
-			public boolean isKing() {			
-				return false;
-			}
-		},
-		ROOK("R") {
-			@Override
-			public boolean isKing() {			
-				return false;
-			}
-		},
-		QUEEN("Q") {
-			@Override
-			public boolean isKing() {			
-				return false;
-			}
-		},
-		KING("K") {
-			@Override
-			public boolean isKing() {
-				return true;
-			}
-		};
-		String pieceName;
-		PieceType(String pieceName){
-			this.pieceName = pieceName;
+		PAWN(100, "P") {
+            public boolean isPawn() {
+                return true;
+            }
+            public boolean isBishop() {
+                return false;
+            }
+            public boolean isRook() {
+                return false;
+            }
+            public boolean isKing() {
+                return false;
+            }
+        },
+        KNIGHT(320, "N") {
+            public boolean isPawn() {
+                return false;
+            }
+            public boolean isBishop() {
+                return false;
+            }
+            public boolean isRook() {
+                return false;
+            }
+            public boolean isKing() {
+                return false;
+            }
+        },
+        BISHOP(350, "B") {
+            public boolean isPawn() {
+                return false;
+            }
+            public boolean isBishop() {
+                return true;
+            }
+            public boolean isRook() {
+                return false;
+            }
+            public boolean isKing() {
+                return false;
+            }
+        },
+        ROOK(500, "R") {
+            public boolean isPawn() {
+                return false;
+            }
+            public boolean isBishop() {
+                return false;
+            }
+            public boolean isRook() {
+                return true;
+            }
+            public boolean isKing() {
+                return false;
+            }
+        },
+        QUEEN(900, "Q") {
+            public boolean isPawn() {
+                return false;
+            }
+            public boolean isBishop() {
+                return false;
+            }
+            public boolean isRook() {
+                return false;
+            }
+            public boolean isKing() {
+                return false;
+            }
+        },
+        KING(20000, "K") {
+            public boolean isPawn() {
+                return false;
+            }
+            public boolean isBishop() {
+                return false;
+            }
+            public boolean isRook() {
+                return false;
+            }
+            public boolean isKing() {
+                return true;
+            }
+        };
+		int value;
+        String pieceName;
+
+        public int getPieceValue() {
+            return this.value;
+        }
+
+        @Override
+        public String toString() {
+            return this.pieceName;
+        }
+
+        PieceType(final int val, final String pieceName) {
+            this.value = val;
+            this.pieceName = pieceName;
+        }
+        public abstract boolean isPawn();
+        public abstract boolean isBishop();
+        public abstract boolean isRook();
+        public abstract boolean isKing();
 		}
 		
-		public abstract boolean isKing();
-		
+	
+	
+	public int hashCode()
+	{
+		return code;
 	}
 	
 	public int calculateCode()
 	{
-		int code = pieceType.hashCode();
+		int code = this.pieceType.hashCode();
 		code = 31 * code + pieceTeam.hashCode();
 		code = 31 * code + position;
 		code = 31 * code + (isFirstMove() ? 1:0);
@@ -141,6 +209,6 @@ public abstract class Piece {
 	}
 
 	public void setFirstMove(boolean firstMove) {
-		this.firstMove = firstMove;
+		this.isFirstMove = firstMove;
 	}
 }

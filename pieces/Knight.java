@@ -17,13 +17,13 @@ public class Knight extends Piece{
 	private Team pieceTeam;
 	
 	public Knight(Team pieceTeam, int position) {
-		super(PieceType.ROOK, position, pieceTeam, true);
+		super(PieceType.KNIGHT, position, pieceTeam, true);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
 	
 	public Knight(Team pieceTeam, int position, boolean firstMove) {
-		super(PieceType.ROOK, position, pieceTeam, firstMove);
+		super(PieceType.KNIGHT, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
@@ -40,7 +40,7 @@ public class Knight extends Piece{
 			
 			//If the coordinate is valid (in the chess board)
 			if(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate)) {
-				Square potentialMoveSquare = board.getSquare(potentialMoveCoordinate);
+				Piece potentialMoveSquare = board.getSquare(potentialMoveCoordinate).getPiece();
 				
 				//
 				if( file1EdgeCase(this.position, possibleMove) == true ||
@@ -51,12 +51,12 @@ public class Knight extends Piece{
 				}
 				
 				//If the square is not occupied by ANY piece, no matter the team, it is legal
-				if(!potentialMoveSquare.isOccupied()) {
+				if(potentialMoveSquare == null) {
 					//Add the piece to the legalMoves list
 					legalMoves.add(new ImportantMove(board, this, potentialMoveCoordinate));
 				}
 				else{
-					Piece pieceAtDestination = potentialMoveSquare.getPiece();
+					Piece pieceAtDestination = potentialMoveSquare;
 					Team pieceTeam = pieceAtDestination.getTeam();
 					
 					//If there is no piece there/The piece there is of the opposite team
@@ -69,11 +69,7 @@ public class Knight extends Piece{
 		}
 		return legalMoves;
 	}
-	
-	@Override
-	public String toString() {
-		return Piece.PieceType.KNIGHT.toString();
-	}
+
 	
 	public static boolean file1EdgeCase(int currentSquare, int possibleMove) {
 		/**
@@ -104,8 +100,13 @@ public class Knight extends Piece{
 		
 		return isEdgeCase;
 	}
-	@Override
-	public Piece movePiece(Move move) {
-		return new Knight(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+	
+	public String toString() {
+		return this.getPieceType().toString();
 	}
+	
+	public Piece movePiece(Move move) {
+		return null;
+	}
+
 }

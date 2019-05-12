@@ -14,13 +14,13 @@ public class Pawn extends Piece {
     private Team pieceTeam;
 
 	public Pawn(Team pieceTeam, int position) {
-		super(PieceType.Pawn, position, pieceTeam, true);
+		super(PieceType.PAWN, position, pieceTeam, true);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
 	
 	public Pawn(Team pieceTeam, int position, boolean firstMove) {
-		super(PieceType.Pawn, position, pieceTeam, firstMove);
+		super(PieceType.PAWN, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
@@ -46,7 +46,7 @@ public class Pawn extends Piece {
 				if(board.getSquare(potentialMoveCoordinate).isOccupied()) {
 					Piece pieceOnPotential = board.getSquare(potentialMoveCoordinate).getPiece();
 					if(this.getTeam() != pieceOnPotential.getTeam()) {
-						legalMoves.add(new PawnAttack(board, this, potentialMoveCoordinate, pieceOnPotential));
+						legalMoves.add(new PawnAttackingMove(board, this, potentialMoveCoordinate, pieceOnPotential));
 					}
 				}
 			}
@@ -54,7 +54,7 @@ public class Pawn extends Piece {
 				if(board.getSquare(potentialMoveCoordinate).isOccupied()) {
 					Piece pieceOnPotential = board.getSquare(potentialMoveCoordinate).getPiece();
 					if(this.getTeam() != pieceOnPotential.getTeam()) {
-						legalMoves.add(new PawnAttack(board, this, potentialMoveCoordinate, pieceOnPotential));
+						legalMoves.add(new PawnAttackingMove(board, this, potentialMoveCoordinate, pieceOnPotential));
 					}
 				}
 			}
@@ -62,8 +62,12 @@ public class Pawn extends Piece {
 		
 		return legalMoves;
     }
-	@Override
+	
+	public String toString() {
+		return this.getPieceType().toString();
+	}
+
 	public Piece movePiece(Move move) {
-		return new Pawn(ImportantMove.getMovedPiece().getTeam(), ImportantMove.getDestination());
+		return null;
 	}
 }
