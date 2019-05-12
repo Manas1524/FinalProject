@@ -12,13 +12,13 @@ public class Queen extends Piece
 	private Team pieceTeam;
 	
 	public Queen(Team pieceTeam, int position) {
-		super(PieceType.ROOK, position, pieceTeam, true);
+		super(PieceType.QUEEN, position, pieceTeam, true);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
 	
 	public Queen(Team pieceTeam, int position, boolean firstMove) {
-		super(PieceType.ROOK, position, pieceTeam, firstMove);
+		super(PieceType.QUEEN, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}

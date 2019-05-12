@@ -13,13 +13,13 @@ public class King extends Piece{
 	private Team pieceTeam;
 	
 	public King(Team pieceTeam, int position) {
-		super(PieceType.ROOK, position, pieceTeam, true);
+		super(PieceType.KING, position, pieceTeam, true);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
 	
 	public King(Team pieceTeam, int position, boolean firstMove) {
-		super(PieceType.ROOK, position, pieceTeam, firstMove);
+		super(PieceType.KING, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
