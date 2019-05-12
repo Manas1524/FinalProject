@@ -16,13 +16,12 @@ public abstract class Player {
 		this.board = board;
 		this.playerKing = createKing();
 		this.legalMoves = legalMoves;
-		this.legalMoves.addAll(findKingCastles(legalMoves,enemyMoves));
 		//Pass in king's current squares and the enemy's possible moves - if the enemy can move to the king's square, it's in check
 		//If the list isn't empty, the king is in check
 		this.inCheck = !Player.getAttackOnSquare(this.playerKing.getPosition(), enemyMoves).isEmpty();
 	}
 
-	public static ArrayList<Move> getAttackOnSquare(int position, ArrayList<Move> moves) {
+	private static ArrayList<Move> getAttackOnSquare(int position, ArrayList<Move> moves) {
 		ArrayList<Move> attackingMoves = new ArrayList<Move>();
 		for(Move move: moves) {
 			if(position == move.getEndCoordinate())
@@ -48,7 +47,7 @@ public abstract class Player {
 	public boolean inCheck() {
 		return this.inCheck;
 	}
-	//IMPLEMENT LATER
+
 	public boolean inCheckMate() {
 		return this.inCheck && !hasEscapeMoves();
 	}
@@ -76,7 +75,7 @@ public abstract class Player {
 	
 	public MoveTransition makeMove(Move move) {
 		if(isLegalMove(move)) {
-			return new MoveTransition(this.board, this.board, move, MoveStatus.ILLEGAL_MOVE);
+			return new MoveTransition(this.board, move, MoveStatus.ILLEGAL_MOVE);
 		}
 		//If illegal, make new board
 		Board transitionBoard = move.doMove();
@@ -85,9 +84,9 @@ public abstract class Player {
 															  transitionBoard.currentPlayer().getLegalMoves());
 		
 		if(kingAttack.isEmpty() == false) {
-			return new MoveTransition(this.board, this.board, move, MoveStatus.PLAYER_LEFT_IN_CHECK);
+			return new MoveTransition(this.board, move, MoveStatus.PLAYER_LEFT_IN_CHECK);
 		}
-		return new MoveTransition(this.board, transitionBoard, move, MoveStatus.DONE);
+		return new MoveTransition(transitionBoard, move, MoveStatus.DONE);
 	}
 	
 	public King getPlayerKing() {
@@ -101,5 +100,4 @@ public abstract class Player {
 	public abstract ArrayList<Piece> getAlivePieces();
 	public abstract Team getTeam();
 	public abstract Player getEnemy();
-	public abstract AbstractList<Move> findKingCastles(ArrayList<Move> playerMoves, ArrayList<Move> enemyMoves) ;
 }

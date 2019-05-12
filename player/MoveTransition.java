@@ -1,4 +1,4 @@
-package player;
+	package player;
 
 import board.*;
 import pieces.*;
@@ -14,6 +14,11 @@ public class MoveTransition {
 	//MoveStatus is if the move is legal, a castle, check, etc.
 	private MoveStatus moveStatus;
 	
+	private Board fromBoard;
+    private Board toBoard;
+    private Move transitionMove;
+  
+
 	public MoveTransition(Board transitionBoard, Move move, MoveStatus moveStatus) {
 		this.transitionBoard = transitionBoard;
 		this.move = move;
@@ -23,4 +28,17 @@ public class MoveTransition {
 	public MoveStatus getMoveStatus() {
 		return this.moveStatus;
 	}
+	
+	public Board getFromBoard() {
+	        return this.fromBoard;
+	}
+
+	public Board getToBoard() {
+	         return this.toBoard;
+	}
+	    
+	public Move getTransitionMove() {
+	        return this.transitionMove;
+	}
+
 }
