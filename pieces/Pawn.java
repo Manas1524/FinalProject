@@ -14,13 +14,13 @@ public class Pawn extends Piece {
     private Team pieceTeam;
 
 	public Pawn(Team pieceTeam, int position) {
-		super(PieceType.Pawn, position, pieceTeam, true);
+		super(PieceType.PAWN, position, pieceTeam, true);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
 	
 	public Pawn(Team pieceTeam, int position, boolean firstMove) {
-		super(PieceType.Pawn, position, pieceTeam, firstMove);
+		super(PieceType.PAWN, position, pieceTeam, firstMove);
 		this.position = position;
 		this.pieceTeam = pieceTeam;
 	}
