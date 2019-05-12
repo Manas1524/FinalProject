@@ -30,7 +30,6 @@ public class Rook extends Piece {
 	 */
 	public ArrayList<Move> legalMoves(Board board) 
 	{
-		
 		int potentialMoveCoordinate;
 		ArrayList<Move> legalMoves = new ArrayList<Move>();
 		
@@ -41,7 +40,7 @@ public class Rook extends Piece {
 			while(BoardFunctionality.isValidCoordinate(potentialMoveCoordinate))
 			{
 				if(isFirstColumnExclusion(potentialMoveCoordinate, possibleMove)
-						|| (isEightColumnExclusion(potentialMoveCoordinate, possibleMove)))
+						|| isEightColumnExclusion(potentialMoveCoordinate, possibleMove))
 				{
 					break;
 				}
@@ -59,7 +58,6 @@ public class Rook extends Piece {
 				}
 				else
 				{
-					
 					Team pieceTeam = pieceAtDestination.getPieceTeam();
 					
 					if(this.pieceTeam != pieceTeam)
@@ -98,7 +96,7 @@ public class Rook extends Piece {
 	 */
 	public static boolean isEightColumnExclusion(int currentPosition, int potentialMoveCoordinate)
 	{
-		return BoardFunctionality.file1[currentPosition] && (potentialMoveCoordinate == 1);
+		return BoardFunctionality.file8[currentPosition] && (potentialMoveCoordinate == 1);
 	}
 	
 	public Piece movePiece(Move move) {
