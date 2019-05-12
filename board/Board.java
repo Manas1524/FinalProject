@@ -27,7 +27,7 @@ public class Board {
 		
 		this.whitePlayer =  new WhitePlayer(this, standardWhiteMoves, standardBlackMoves);
 		this.blackPlayer =  new BlackPlayer(this, standardWhiteMoves, standardBlackMoves);
-		this.currentPlayer = null;
+		this.currentPlayer = builder.nextMove.choosePlayerByTeam(this.whitePlayer, this.blackPlayer);
 	}
 	
 	

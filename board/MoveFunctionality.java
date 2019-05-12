@@ -5,7 +5,7 @@ public class MoveFunctionality {
 		throw new RuntimeException("Not Instantiable");
 	}
 	
-	public Move makeMove(Board board, int startCoordinate, int endCoordinate) {
+	public static Move makeMove(Board board, int startCoordinate, int endCoordinate) {
 		for(Move move: board.findAllLegalMoves()) {
 			if(move.getStartCoordinate() == startCoordinate && move.getEndCoordinate() == endCoordinate) {
 				return move;
