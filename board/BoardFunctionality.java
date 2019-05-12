@@ -1,10 +1,7 @@
 package board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import pieces.*;
 
 /**
  * All methods/variables are static so they can be used in other classes without instantiating the object
@@ -31,12 +28,13 @@ public class BoardFunctionality {
 	
 	public static final int SQUARE_AMOUNT = 64;
 	public static final int SQUARES_PER_ROW = 8;
-	
-	public final ArrayList<String> ALGEBRAIC_NOTATION = makeAlgebreicNotation();
-	public final Map<String, Integer> POSITION_TO_COORDINATE = initializePositionToCoordinateMap();
 	public static final int START_TILE_INDEX = 0;
-    public static final int NUM_TILES_PER_ROW = 8;
-    public static final int NUM_TILES = 64;
+	
+    
+	public final static String[] ALGEBRAIC_NOTATION = makeAlgebraicNotation();
+	public final Map<String, Integer> POSITION_TO_COORDINATE = makePositionMap();
+
+	    
 	/**
 	 * 
 	 * @throws RuntimeException - This method cannot be instantiated
@@ -58,66 +56,66 @@ public class BoardFunctionality {
 		return false;
 	}
 	
-	private static Map<String, Integer> initializePositionToCoordinateMap() {
+	private static Map<String, Integer> makePositionMap() {
         final Map<String, Integer> positionToCoordinate = new HashMap<>();
-        for (int i = START_TILE_INDEX; i < NUM_TILES; i++) {
-            positionToCoordinate.put(makeAlgebreicNotation().get(i), i);
+        for (int i = START_TILE_INDEX; i < SQUARE_AMOUNT; i++) {
+            positionToCoordinate.put(ALGEBRAIC_NOTATION[i], i);
         }
         return positionToCoordinate;
     }
 	
+	 public int coordinateAtPosition(String position) {
+		 return POSITION_TO_COORDINATE.get(position);
+	    }
+
+	public String positionAtCoordinate(int coordinate) {
+		return ALGEBRAIC_NOTATION[coordinate];
+	    }
+	
+	private static String[] makeAlgebraicNotation() {
+        return new String[]{
+                "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
+                "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
+                "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
+                "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
+                "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
+                "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
+                "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
+                "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
+        };
+    }
+	
 	public static int getCoordinate(String position)
 	{
-		return initializePositionToCoordinateMap().get(position);
+		return makePositionMap().get(position);
 	}
-	
-	public int getCoordinateAtPosition(final String position) {
-        return POSITION_TO_COORDINATE.get(position);
-    }
 	
 	public static String getPosition(int coordinate)
 	{
-		return makeAlgebreicNotation().get(coordinate);
+		return makeAlgebraicNotation()[coordinate];
 	}
-	
-	 private static ArrayList<String> makeAlgebreicNotation() {
-	        ArrayList<String> notationList = new ArrayList<String>();
-	        String[] notation = {
-	                "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-	                "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-	                "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-	                "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-	                "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-	                "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-	                "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-	                "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
-	        };
-	        
-	        for(String temp: notation) {
-	        	notationList.add(temp);
-	        }
-	        return notationList;
-	    }
-	 
-	public static boolean isEndGame(final Board board) {
-        return board.currentPlayer().inCheckMate() ||
-               board.currentPlayer().inStaleMate();
-    }
-	
+
 	public static boolean[] createFile(int columnNumber) {
-		boolean[] file = new boolean[SQUARES_PER_ROW];
+		boolean[] file = new boolean[SQUARE_AMOUNT];
+		
+		for(int i = 0; i < file.length; i++) {
+			file[i] = false;
+        }
 		
 		do {
 			file[columnNumber] = true;
 			columnNumber += SQUARES_PER_ROW;
 		}
-		while(columnNumber < SQUARES_PER_ROW);
+		while(columnNumber < SQUARE_AMOUNT);
 			return file;
 	}
 	
 	public static boolean[] createRank(int rowNumber) {
-		boolean[] rank = new boolean[SQUARES_PER_ROW];
+		boolean[] rank = new boolean[SQUARE_AMOUNT];
 		
+		for(int i = 0; i < rank.length; i++) {
+			rank[i] = false;
+        }
 		do {
 			rank[rowNumber] = true;
 			rowNumber ++;
@@ -125,4 +123,9 @@ public class BoardFunctionality {
 		while(rowNumber % SQUARES_PER_ROW != 0);
 			return rank;
 	}
+	
+	public static boolean isEndGame(final Board board) {
+        return board.currentPlayer().inCheckMate() ||
+               board.currentPlayer().inStaleMate();
+    }
 }

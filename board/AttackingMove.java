@@ -15,27 +15,4 @@ public class AttackingMove extends Move {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	public boolean isAttackingMove() {
-		return true;
-	}
-
-	public Piece getCapturedPiece() {
-		return this.capturedPiece;
-	}
-	
-	public int hashCode() {
-		return this.capturedPiece.hashCode() + super.hashCode();
-	}
-	
-	public boolean equals(final Object a) {
-		if(this == a) {
-			return true;
-		}
-		if(!(a instanceof AttackingMove)) {
-			return false;
-		}
-		AttackingMove otherAttackingMove = (AttackingMove)a;
-		return super.equals(otherAttackingMove) && getCapturedPiece().equals(otherAttackingMove.getCapturedPiece());
-	}
 }

@@ -1,12 +1,9 @@
 package board;
 
-import pieces.*;
+import pieces.Piece;
 
 public class QueenCastle extends Castle{
-	public QueenCastle(Board board, Piece piece, int endCoordinate, Rook rook, int rookStartCoordinate, int rookEndCoordinate){
-		super(board,piece,endCoordinate, rook, rookStartCoordinate, rookEndCoordinate);
-	}
-	public String toString() {
-		return "O-O-O";
+	public QueenCastle(Board board, Piece piece, int endCoordinate){
+		super(board,piece,endCoordinate);
 	}
 }

@@ -1,8 +1,6 @@
 package board;
 
 import java.util.*;
-
-import board.Board.Builder;
 import player.*;
 import pieces.*;
 
@@ -27,7 +25,7 @@ public class Board {
 		
 		this.whitePlayer =  new WhitePlayer(this, standardWhiteMoves, standardBlackMoves);
 		this.blackPlayer =  new BlackPlayer(this, standardWhiteMoves, standardBlackMoves);
-		this.currentPlayer = builder.nextMove.choosePlayerByTeam(this.whitePlayer, this.blackPlayer);
+		this.currentPlayer = builder.nextMove.choosePlayerByTeam(this.whitePlayer, this.blackPlayer);;
 	}
 	
 	
@@ -90,7 +88,7 @@ public class Board {
 		for(Square square: gameBoard) {
 			if(square.isOccupied()) {
 				Piece piece = square.getPiece();
-				if(piece.getTeam() == team) {
+				if(piece.getPieceTeam() == team) {
 					alivePieces.add(piece);
 				}
 			}
@@ -103,12 +101,19 @@ public class Board {
 	}
 	
 	public static ArrayList<Square> makeBoard(Builder builder) {
-		ArrayList<Square> boardSquares = new ArrayList<Square>(BoardFunctionality.SQUARE_AMOUNT);
+
+		ArrayList<Square> boardSquares = new ArrayList<Square>();
 		
-		for(int i = 0; i < boardSquares.size(); i++) {
+		for(int i = 0; i < BoardFunctionality.SQUARE_AMOUNT; i++) {
 			//boardConfig - maps a piece to a square - gives the tile an id.
 			//When we create the square, we associate the square id to the piece
-			boardSquares.set(i, new Occupied_Square(i, builder.boardConfig.get(i)));
+			if(i < 16 || i > 47) {
+				boardSquares.add(new Occupied_Square(i, builder.boardConfig.get(i)));	
+			}
+			else {
+				boardSquares.add(new Unoccupied_Square(i));
+			}
+			
 		}
 		return boardSquares;
 	}
