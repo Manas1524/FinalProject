@@ -6,6 +6,7 @@ import javax.swing.filechooser.FileFilter;
 
 import board.*;
 import pieces.*;
+import player.MoveTransition;
 import player.Player;
 import UI.*;
 
@@ -250,9 +251,9 @@ public final class Frame extends Observable
                                 click = null;
                             }
                         } else {
-                            Move move = MoveFunctionality.makeMove(chessBoard, click.getPosition(),
+                            final Move move = MoveFunctionality.makeMove(chessBoard, click.getPosition(),
                                     square);
-                            MoveTransition transition = chessBoard.currentPlayer().makeMove(move);
+                            final MoveTransition transition = chessBoard.currentPlayer().makeMove(move);
                             if (transition.getMoveStatus().isDone()) {
                                 chessBoard = transition.getToBoard();
                             }
